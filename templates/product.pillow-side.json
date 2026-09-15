@@ -1,0 +1,696 @@
+{
+  "sections": {
+    "main": {
+      "type": "product-information",
+      "blocks": {
+        "disclosures_g9mWze": {
+          "type": "disclosures",
+          "name": "t:names.disclosures",
+          "settings": {
+            "heading": "Disclosures",
+            "heading_preset": "h5",
+            "open_by_default": false,
+            "icon": "caret",
+            "disclosure_heading_preset": "h6",
+            "text_color": "",
+            "dividers": true,
+            "divider_color": "{{ settings.color_palette.color2 }}",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "media-gallery": {
+          "type": "_product-media-gallery",
+          "static": true,
+          "settings": {
+            "media_presentation": "grid",
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": false,
+            "slideshow_controls_style": "counter",
+            "slideshow_mobile_controls_style": "dots",
+            "thumbnail_position": "right",
+            "thumbnail_width": 44,
+            "thumbnail_radius": 0,
+            "aspect_ratio": "adapt",
+            "constrain_to_viewport": true,
+            "media_fit": "contain",
+            "media_radius": 0,
+            "extend_media": false,
+            "zoom": true,
+            "video_loop": false,
+            "hide_variants": true,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "product-details": {
+          "type": "_product-details",
+          "static": true,
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "details_position": "flex-start",
+            "gap": 28,
+            "sticky_details_desktop": true,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 24,
+            "padding-block-end": 24,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "group_icgrde": {
+              "type": "group",
+              "name": "t:names.header",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "background_color": "",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "text_xrnftG": {
+                  "type": "text",
+                  "name": "t:names.product_title",
+                  "settings": {
+                    "text": "<h1>{{ closest.product.title }}</h1>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h3",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "text_color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
+                "price_tVjtKg": {
+                  "type": "price",
+                  "settings": {
+                    "show_sale_price_first": true,
+                    "show_installments": false,
+                    "show_tax_info": false,
+                    "type_preset": "paragraph",
+                    "width": "100%",
+                    "alignment": "left",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "text_color": "",
+                    "padding-block-start": 4,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_xrnftG",
+                "price_tVjtKg"
+              ]
+            },
+            "divider_VJhene": {
+              "type": "_divider",
+              "name": "t:names.divider",
+              "settings": {
+                "thickness": 1,
+                "corner_radius": "square",
+                "divider_color": "{{ settings.color_palette.color2 }}",
+                "width_percent": 100,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
+            "variant_picker_R3rGDr": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": false,
+                "option_label_text_color": "",
+                "variant_style_class": "default",
+                "custom_variant_background": "{{ settings.color_palette.background }}",
+                "custom_variant_text": "{{ settings.color_palette.foreground }}",
+                "custom_variant_border": "{{ settings.color_palette.foreground }}",
+                "selected_variant_style_class": "default",
+                "custom_selected_variant_background": "{{ settings.color_palette.foreground }}",
+                "custom_selected_variant_text": "{{ settings.color_palette.background }}",
+                "custom_selected_variant_border": "{{ settings.color_palette.foreground }}",
+                "alignment": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "buy_buttons_eYQEYi": {
+              "type": "buy-buttons",
+              "settings": {
+                "stacking": true,
+                "text_color": "",
+                "show_pickup_availability": false,
+                "gift_card_form": true,
+                "recipient_button_style": "default",
+                "recipient_button_background": "{{ settings.color_palette.background }}",
+                "recipient_button_text": "{{ settings.color_palette.foreground }}",
+                "recipient_button_border": "{{ settings.color_palette.foreground }}",
+                "selected_recipient_button_style": "default",
+                "selected_recipient_button_background": "{{ settings.color_palette.foreground }}",
+                "selected_recipient_button_text": "{{ settings.color_palette.background }}",
+                "selected_recipient_button_border": "{{ settings.color_palette.foreground }}",
+                "input_style": "default",
+                "input_background_color": "{{ settings.color_palette.background }}",
+                "input_text_color": "{{ settings.color_palette.foreground }}",
+                "input_border_color": "{{ settings.color_palette.foreground }}",
+                "border_width": 1,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "quantity": {
+                  "type": "quantity",
+                  "static": true,
+                  "settings": {
+                    "input_style": "default",
+                    "input_background_color": "{{ settings.color_palette.background }}",
+                    "input_text_color": "{{ settings.color_palette.foreground }}",
+                    "input_border_color": "{{ settings.color_palette.foreground }}",
+                    "border_width": 1,
+                    "border_radius": 0
+                  },
+                  "blocks": {}
+                },
+                "add-to-cart": {
+                  "type": "add-to-cart",
+                  "static": true,
+                  "settings": {
+                    "style_class": "button",
+                    "custom_button_background": "{{ settings.color_palette.foreground }}",
+                    "custom_button_text": "{{ settings.color_palette.background }}",
+                    "custom_button_border": "{{ settings.color_palette.background }}"
+                  },
+                  "blocks": {}
+                },
+                "accelerated-checkout": {
+                  "type": "accelerated-checkout",
+                  "static": true,
+                  "settings": {},
+                  "blocks": {}
+                }
+              },
+              "block_order": []
+            },
+            "text_aEtTtq": {
+              "type": "text",
+              "name": "t:names.product_description",
+              "settings": {
+                "text": "{{ closest.product.description }}",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "ps_highlights": {
+              "type": "ps-buybox-highlights",
+              "settings": {
+                "tagline": "Blackout built for people who roll over.",
+                "benefits": "Designed for side & combination sleepers\n3D eye clearance\nLow-profile pillow-side fit"
+              }
+            }
+          },
+          "block_order": [
+            "group_icgrde",
+            "ps_highlights",
+            "divider_VJhene",
+            "variant_picker_R3rGDr",
+            "buy_buttons_eYQEYi",
+            "text_aEtTtq"
+          ]
+        }
+      },
+      "block_order": [
+        "disclosures_g9mWze"
+      ],
+      "settings": {
+        "content_width": "content-center-aligned",
+        "desktop_media_position": "left",
+        "equal_columns": false,
+        "limit_details_width": false,
+        "gap": 48,
+        "enable_sticky_add_to_cart": true,
+        "background_color": "{{ settings.color_palette.background }}",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "ps_problem": {
+      "type": "ps-problem",
+      "settings": {
+        "eyebrow": "The side-sleeper problem",
+        "heading": "Your mask works.\nUntil you roll over.",
+        "body": "<p>Most sleep masks look perfectly comfortable when you're lying still.</p><p>Then you turn onto your side.</p><p>The pillow pushes against the mask. It shifts. A small gap can open around the nose. The eye area starts feeling crowded.</p><p>So you tighten the strap.</p><p><strong>Now you've solved one problem by creating another.</strong></p>",
+        "fallback_media": 7,
+        "image_alt": "Side-by-side comparison: an ordinary flat mask letting light in near the nose, and the Pillow-Side contoured mask sitting flush against the pillow",
+        "background": "cream",
+        "spacing": "lg",
+        "image": "shopify://shop_images/ps-s02-problem.jpg"
+      }
+    },
+    "ps_big_idea": {
+      "type": "ps-hero",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Blackout built\nfor people\nwho roll over.",
+        "body": "<p>Your sleep mask shouldn't only work when you're lying perfectly still.</p>",
+        "fallback_media": 3,
+        "image_alt": "Woman sleeping on her side at night wearing the Pillow-Side contoured sleep mask",
+        "focal_x": 65,
+        "focal_y": 40,
+        "loading": "lazy",
+        "position": "bottom-left",
+        "text_tone": "light",
+        "overlay": 45,
+        "min_height": 90,
+        "reserve_sticky": false,
+        "image": "shopify://shop_images/ps-s03-bigidea-night.jpg"
+      }
+    },
+    "ps_mechanism": {
+      "type": "ps-mechanism",
+      "settings": {
+        "eyebrow": "The mechanism",
+        "heading": "Meet the\nPillow-Side Profile™",
+        "body": "<p>Designed around the part most sleep masks ignore:</p><p><strong>what happens when your face meets the pillow.</strong></p>",
+        "fallback_media": 1,
+        "image_alt": "Pillow-Side contoured sleep mask with recessed eye cups and adjustable strap",
+        "background": "night",
+        "spacing": "lg"
+      }
+    },
+    "ps_contact_points": {
+      "type": "ps-mechanism-callout",
+      "settings": {
+        "eyebrow": "Pillow-Side Profile™",
+        "heading": "Built around\nthree contact points.",
+        "fallback_media": 6,
+        "image_alt": "Pillow-Side mask with close-ups of the 3D eye space, contoured nose fit and low-profile sides",
+        "background": "white",
+        "spacing": "lg",
+        "image": "shopify://shop_images/ps-s05-callout.jpg"
+      },
+      "blocks": {
+        "cp_eye": {
+          "type": "feature",
+          "settings": {
+            "title": "3D Eye Space",
+            "text": "More room around the eyelids and lashes than a traditional flat mask."
+          }
+        },
+        "cp_nose": {
+          "type": "feature",
+          "settings": {
+            "title": "Contoured Nose Fit",
+            "text": "Shaped around a common pathway where outside light can enter."
+          }
+        },
+        "cp_sides": {
+          "type": "feature",
+          "settings": {
+            "title": "Low-Profile Sides",
+            "text": "Less unnecessary bulk where the side of the face meets the pillow."
+          }
+        }
+      },
+      "block_order": [
+        "cp_eye",
+        "cp_nose",
+        "cp_sides"
+      ]
+    },
+    "ps_story_eyes": {
+      "type": "ps-feature-story",
+      "settings": {
+        "eyebrow": "01 — Eye space",
+        "heading": "More room\nfor your eyes.",
+        "body": "<p>Recessed 3D eye space is designed to keep the mask from sitting flat against your eyelids and lashes.</p>",
+        "fallback_media": 2,
+        "image_alt": "Front view of the Pillow-Side mask showing its two recessed eye cups",
+        "focal_x": 50,
+        "focal_y": 50,
+        "layout": "media-right",
+        "background": "white",
+        "spacing": "md"
+      }
+    },
+    "ps_story_nose": {
+      "type": "ps-feature-story",
+      "settings": {
+        "eyebrow": "02 — Nose fit",
+        "heading": "Darkness shouldn't\ndepend on\novertightening.",
+        "body": "<p>A contoured nose area helps reduce one of the most common gaps where outside light can sneak in.</p>",
+        "fallback_media": 5,
+        "image_alt": "Close-up of the Pillow-Side mask's contoured nose area on a side sleeper",
+        "focal_x": 60,
+        "focal_y": 55,
+        "layout": "media-left",
+        "background": "stone",
+        "spacing": "md",
+        "image": "shopify://shop_images/ps-s07-nose-closeup.jpg"
+      }
+    },
+    "ps_story_pillow": {
+      "type": "ps-feature-story",
+      "settings": {
+        "eyebrow": "03 — Pillow side",
+        "heading": "Less mask\nbetween you\nand your pillow.",
+        "body": "<p>A lower-profile side design reduces unnecessary bulk where the mask meets the pillow.</p>",
+        "fallback_media": 5,
+        "image_alt": "Close-up of the Pillow-Side mask where the side of the face rests on the pillow",
+        "focal_x": 60,
+        "focal_y": 45,
+        "layout": "media-full",
+        "background": "cream",
+        "spacing": "md"
+      }
+    },
+    "ps_behavior": {
+      "type": "ps-lifestyle-break",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Back.\nSide.\nOther side.\nRepeat.",
+        "cascade": true,
+        "body": "<p>Sleep isn't a product photo.</p><p>You move.</p><p><strong>Your mask should be designed with that in mind.</strong></p>",
+        "fallback_media": 3,
+        "image_alt": "Woman sleeping comfortably on her side wearing the Pillow-Side mask",
+        "focal_x": 45,
+        "focal_y": 40,
+        "media_position": "right",
+        "mobile_media_first": false,
+        "background": "stone",
+        "spacing": "lg",
+        "image": "shopify://shop_images/ps-s09-behavior.jpg"
+      }
+    },
+    "ps_objection": {
+      "type": "ps-objection",
+      "settings": {
+        "heading": "“Why not just buy\na $15 sleep mask?”",
+        "body": "<p><strong>You can.</strong></p><p>If it stays dark, stays comfortable and doesn't bother you when you roll over, you probably don't need another one.</p><p>Pillow-Side is for the sleeper who's already discovered the difference between a mask that blocks light in theory — and one that still feels right when their face meets the pillow.</p>",
+        "background": "white",
+        "spacing": "lg"
+      }
+    },
+    "ps_offer": {
+      "type": "ps-offer-context",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Choose your setup.",
+        "preselect": true,
+        "footnote": "Checkout always uses the live price of the option you select above.",
+        "fallback_media": 8,
+        "image_alt": "One Pillow-Side mask above a two-pack of Pillow-Side masks",
+        "background": "cream",
+        "spacing": "lg",
+        "image": "shopify://shop_images/ps-s11-offer.jpg"
+      },
+      "blocks": {
+        "offer_single": {
+          "type": "offer",
+          "settings": {
+            "variant_title": "1 Mask",
+            "units": 1,
+            "label": "1 Mask",
+            "subtitle": "Best for: your nightly setup.",
+            "savings_suffix": "",
+            "fallback_price": "$54.95",
+            "savings_fallback": "",
+            "use_cases": "",
+            "cta_label": "Select 1 Mask"
+          }
+        },
+        "offer_bundle": {
+          "type": "offer",
+          "settings": {
+            "variant_title": "2-Pack",
+            "units": 2,
+            "label": "2-Pack",
+            "subtitle": "Two masks, one order.",
+            "savings_suffix": "compared with buying two separately.",
+            "fallback_price": "$94.95",
+            "savings_fallback": "Save $14.95 compared with buying two separately.",
+            "use_cases": "One at home + one for travel\nOne for each partner\nBackup while one is being washed",
+            "cta_label": "Select 2-Pack"
+          }
+        }
+      },
+      "block_order": [
+        "offer_single",
+        "offer_bundle"
+      ]
+    },
+    "ps_bright_room": {
+      "type": "ps-lifestyle-break",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Darkness,\neven when\nthe room isn't.",
+        "cascade": false,
+        "body": "<p>Bright mornings, long flights, unfamiliar rooms. Bring your own dark.</p>",
+        "fallback_media": 4,
+        "image_alt": "Woman napping in a bright, sunlit bedroom wearing the Pillow-Side mask",
+        "focal_x": 40,
+        "focal_y": 40,
+        "media_position": "left",
+        "mobile_media_first": true,
+        "background": "white",
+        "spacing": "lg"
+      },
+      "blocks": {
+        "uc_1": {
+          "type": "tag",
+          "settings": {
+            "label": "Morning sunlight"
+          }
+        },
+        "uc_2": {
+          "type": "tag",
+          "settings": {
+            "label": "Daytime naps"
+          }
+        },
+        "uc_3": {
+          "type": "tag",
+          "settings": {
+            "label": "Shift work"
+          }
+        },
+        "uc_4": {
+          "type": "tag",
+          "settings": {
+            "label": "Flights"
+          }
+        },
+        "uc_5": {
+          "type": "tag",
+          "settings": {
+            "label": "Hotel rooms"
+          }
+        },
+        "uc_6": {
+          "type": "tag",
+          "settings": {
+            "label": "Travel"
+          }
+        }
+      },
+      "block_order": [
+        "uc_1",
+        "uc_2",
+        "uc_3",
+        "uc_4",
+        "uc_5",
+        "uc_6"
+      ]
+    },
+    "ps_faq": {
+      "type": "ps-faq",
+      "settings": {
+        "eyebrow": "Questions",
+        "heading": "Before you\nroll over.",
+        "open_first": false,
+        "background": "cream",
+        "spacing": "lg"
+      },
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Is Pillow-Side designed for side sleepers?",
+            "answer": "<p>Yes. Its design centers on side and combination sleepers, particularly the places where a mask meets the pillow.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Will it touch my eyelashes?",
+            "answer": "<p>The 3D eye area is designed to create additional clearance compared with a traditional flat mask.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Does it guarantee 100% blackout?",
+            "answer": "<p>No. Fit varies by face shape, so we don't promise total blackout for everyone. The contoured design is intended to reduce common light-entry points when properly fitted.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I use it if I sleep on my back?",
+            "answer": "<p>Yes. Side sleeping is the more demanding use case, but the mask can also be worn while sleeping on your back.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "Is it weighted?",
+            "answer": "<p>No. Pillow-Side is not a weighted sleep mask.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "Is this a treatment for insomnia?",
+            "answer": "<p>No. Pillow-Side is a sleep accessory designed to create a darker, more comfortable sleep environment. It is not a medical device or treatment.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ]
+    },
+    "ps_final": {
+      "type": "ps-hero",
+      "settings": {
+        "eyebrow": "",
+        "heading": "Stop choosing\nbetween darkness\nand comfort.",
+        "body": "<p>Your room can be dark.</p><p>Your mask can be comfortable.</p><p>And you shouldn't have to stay perfectly still for both to remain true.</p>",
+        "brand_title": "Pillow-Side™",
+        "brand_line": "Blackout Built for People Who Roll Over.",
+        "cta_label": "Shop Pillow-Side",
+        "cta_variant": "",
+        "fallback_media": 3,
+        "image_alt": "Woman asleep on her side in a warmly lit bedroom wearing the Pillow-Side mask",
+        "focal_x": 35,
+        "focal_y": 40,
+        "loading": "lazy",
+        "position": "bottom-left",
+        "text_tone": "light",
+        "overlay": 55,
+        "min_height": 95,
+        "reserve_sticky": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "ps_problem",
+    "ps_big_idea",
+    "ps_mechanism",
+    "ps_contact_points",
+    "ps_story_eyes",
+    "ps_story_nose",
+    "ps_story_pillow",
+    "ps_behavior",
+    "ps_objection",
+    "ps_offer",
+    "ps_bright_room",
+    "ps_faq",
+    "ps_final"
+  ]
+}

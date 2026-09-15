@@ -1,0 +1,60 @@
+{%- render 'ps-assets' -%}
+{%- assign s = section.settings -%}
+<section class="ps-page ps-mechanism ps-theme--{{ s.background }} ps-pad--{{ s.spacing }}">
+  <div class="ps-wrap ps-mechanism__grid">
+    <figure class="ps-media ps-mechanism__media ps-reveal ps-reveal-media">
+      {%- render 'ps-image',
+        image: s.image,
+        fallback: s.fallback_media,
+        ps_product: product,
+        alt: s.image_alt,
+        sizes: '(min-width: 990px) 58vw, 100vw'
+      -%}
+    </figure>
+    <div class="ps-mechanism__text ps-reveal">
+      {%- if s.eyebrow != blank -%}
+        <p class="ps-eyebrow">{{ s.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- render 'ps-heading', text: s.heading, class: 'ps-heading--lg' -%}
+      <div class="ps-body ps-body--lead">{{ s.body }}</div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "PS · Mechanism",
+  "tag": "div",
+  "class": "ps-shell",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The mechanism" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "info": "One visual line per line break.", "default": "Meet the\nPillow-Side Profile™" },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Designed around the part most sleep masks ignore:</p><p><strong>what happens when your face meets the pillow.</strong></p>" },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Product image" },
+    { "type": "range", "id": "fallback_media", "label": "Fallback: product media position", "info": "Used when no image is selected. 0 = none.", "min": 0, "max": 20, "step": 1, "default": 1 },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Pillow-Side contoured sleep mask with recessed eye cups and adjustable strap" },
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select", "id": "background", "label": "Background", "default": "night",
+      "options": [
+        { "value": "night", "label": "Night" },
+        { "value": "ink", "label": "Charcoal" },
+        { "value": "cream", "label": "Warm off-white" },
+        { "value": "white", "label": "White" },
+        { "value": "stone", "label": "Soft neutral" }
+      ]
+    },
+    {
+      "type": "select", "id": "spacing", "label": "Vertical spacing", "default": "lg",
+      "options": [
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "PS · Mechanism" }]
+}
+{% endschema %}

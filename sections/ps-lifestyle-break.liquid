@@ -1,0 +1,99 @@
+{%- render 'ps-assets' -%}
+{%- assign s = section.settings -%}
+<section
+  class="ps-page ps-lifestyle ps-theme--{{ s.background }} ps-pad--{{ s.spacing }}"
+  style="--ps-focal: {{ s.focal_x }}% {{ s.focal_y }}%;"
+>
+  <div class="ps-wrap ps-split{% if s.media_position == 'left' %} ps-split--media-left{% endif %}{% if s.mobile_media_first %} ps-split--m-media-first{% endif %}">
+    <div class="ps-split__text ps-reveal">
+      {%- if s.eyebrow != blank -%}
+        <p class="ps-eyebrow">{{ s.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if s.cascade -%}
+        {%- render 'ps-heading', text: s.heading, class: 'ps-heading--lg ps-heading--cascade' -%}
+      {%- else -%}
+        {%- render 'ps-heading', text: s.heading, class: 'ps-heading--lg' -%}
+      {%- endif -%}
+      {%- if s.body != blank -%}
+        <div class="ps-body ps-body--lead">{{ s.body }}</div>
+      {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <ul class="ps-tags" role="list">
+          {%- for block in section.blocks -%}
+            <li class="ps-tag" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+    <div class="ps-split__media">
+      <figure class="ps-media ps-media--portrait ps-reveal ps-reveal-media">
+        {%- render 'ps-image',
+          image: s.image,
+          fallback: s.fallback_media,
+          ps_product: product,
+          alt: s.image_alt,
+          sizes: '(min-width: 990px) 50vw, 100vw'
+        -%}
+      </figure>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "PS · Lifestyle break",
+  "tag": "div",
+  "class": "ps-shell",
+  "enabled_on": { "templates": ["product"] },
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "info": "One visual line per line break.", "default": "Back.\nSide.\nOther side.\nRepeat." },
+    { "type": "checkbox", "id": "cascade", "label": "Stagger heading lines on desktop", "default": false },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Sleep isn't a product photo.</p><p>You move.</p><p>Your mask should be designed with that in mind.</p>" },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "range", "id": "fallback_media", "label": "Fallback: product media position", "info": "Used when no image is selected. 0 = none.", "min": 0, "max": 20, "step": 1, "default": 3 },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Woman sleeping comfortably on her side wearing the Pillow-Side mask" },
+    { "type": "range", "id": "focal_x", "label": "Crop focus horizontal", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 50 },
+    { "type": "range", "id": "focal_y", "label": "Crop focus vertical", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 40 },
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select", "id": "media_position", "label": "Image position on desktop", "default": "right",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left", "label": "Left" }
+      ]
+    },
+    { "type": "checkbox", "id": "mobile_media_first", "label": "Show image first on mobile", "default": false },
+    {
+      "type": "select", "id": "background", "label": "Background", "default": "stone",
+      "options": [
+        { "value": "stone", "label": "Soft neutral" },
+        { "value": "cream", "label": "Warm off-white" },
+        { "value": "white", "label": "White" },
+        { "value": "night", "label": "Night" },
+        { "value": "ink", "label": "Charcoal" }
+      ]
+    },
+    {
+      "type": "select", "id": "spacing", "label": "Vertical spacing", "default": "lg",
+      "options": [
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tag",
+      "name": "Use case",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Travel" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "PS · Lifestyle break" }]
+}
+{% endschema %}

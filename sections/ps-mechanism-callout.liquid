@@ -1,0 +1,97 @@
+{%- render 'ps-assets' -%}
+{%- assign s = section.settings -%}
+<section class="ps-page ps-callout ps-theme--{{ s.background }} ps-pad--{{ s.spacing }}">
+  <div class="ps-wrap">
+    <header class="ps-callout__head ps-reveal">
+      {%- if s.eyebrow != blank -%}
+        <p class="ps-eyebrow">{{ s.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- render 'ps-heading', text: s.heading, class: 'ps-heading--lg' -%}
+    </header>
+    <div class="ps-split ps-split--media-left ps-split--m-media-first">
+      <div class="ps-split__media">
+        <figure class="ps-media ps-media--natural ps-reveal ps-reveal-media">
+          {%- render 'ps-image',
+            image: s.image,
+            fallback: s.fallback_media,
+            ps_product: product,
+            alt: s.image_alt,
+            sizes: '(min-width: 990px) 50vw, 100vw'
+          -%}
+        </figure>
+      </div>
+      <div class="ps-split__text">
+        <ol class="ps-features" role="list">
+          {%- for block in section.blocks -%}
+            <li class="ps-feature ps-reveal" style="--ps-delay: {{ forloop.index0 | times: 0.08 }}s" {{ block.shopify_attributes }}>
+              <span class="ps-feature__num" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+              <div>
+                <h3 class="ps-feature__title">{{ block.settings.title | escape }}</h3>
+                {%- if block.settings.text != blank -%}
+                  <p class="ps-feature__text">{{ block.settings.text | escape }}</p>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "PS · Contact points",
+  "tag": "div",
+  "class": "ps-shell",
+  "enabled_on": { "templates": ["product"] },
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Pillow-Side Profile™" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "info": "One visual line per line break.", "default": "Built around\nthree contact points." },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Feature infographic" },
+    { "type": "range", "id": "fallback_media", "label": "Fallback: product media position", "info": "Used when no image is selected. 0 = none.", "min": 0, "max": 20, "step": 1, "default": 6 },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Pillow-Side mask with close-ups of the 3D eye space, contoured nose fit and low-profile sides" },
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select", "id": "background", "label": "Background", "default": "white",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "cream", "label": "Warm off-white" },
+        { "value": "stone", "label": "Soft neutral" },
+        { "value": "night", "label": "Night" },
+        { "value": "ink", "label": "Charcoal" }
+      ]
+    },
+    {
+      "type": "select", "id": "spacing", "label": "Vertical spacing", "default": "lg",
+      "options": [
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Contact point",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Feature" },
+        { "type": "textarea", "id": "text", "label": "Description" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PS · Contact points",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "3D Eye Space", "text": "More room around the eyelids and lashes than a traditional flat mask." } },
+        { "type": "feature", "settings": { "title": "Contoured Nose Fit", "text": "Shaped around a common pathway where outside light can enter." } },
+        { "type": "feature", "settings": { "title": "Low-Profile Sides", "text": "Less unnecessary bulk where the side of the face meets the pillow." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

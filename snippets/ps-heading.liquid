@@ -1,0 +1,19 @@
+{%- doc -%}
+  Pillow-Side: stacked uppercase heading. Each line break in the
+  setting becomes one visual line.
+  @param {string} text - Heading text (textarea setting)
+  @param {string} [tag] - HTML tag, defaults to h2
+  @param {string} [class] - Extra classes
+{%- enddoc -%}
+{%- liquid
+  assign ps_tag = tag | default: 'h2'
+  assign ps_lines = text | escape | newline_to_br | split: '<br />'
+-%}
+{%- if text != blank -%}
+<{{ ps_tag }} class="ps-heading {{ class }}">
+  {%- for ps_l in ps_lines -%}
+    {%- assign ps_t = ps_l | strip -%}
+    {%- if ps_t != blank -%}<span class="ps-line">{{ ps_t }} </span>{%- endif -%}
+  {%- endfor -%}
+</{{ ps_tag }}>
+{%- endif -%}

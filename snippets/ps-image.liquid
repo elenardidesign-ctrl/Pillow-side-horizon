@@ -1,0 +1,32 @@
+{%- doc -%}
+  Pillow-Side: responsive image with fallback to a product media position.
+  @param {image} [image] - Image picked in the theme editor
+  @param {number} [fallback] - 1-based product media position used when image is blank (0 = none)
+  @param {product} [ps_product] - Product object for the fallback
+  @param {string} [alt] - Alt text override
+  @param {string} [sizes] - sizes attribute
+  @param {string} [loading] - 'lazy' (default) or 'eager'
+  @param {string} [class] - Class for the img element
+{%- enddoc -%}
+{%- liquid
+  assign ps_img = image
+  if ps_img == blank and fallback > 0 and ps_product
+    assign ps_idx = fallback | minus: 1
+    assign ps_img = ps_product.media[ps_idx].preview_image
+  endif
+  assign ps_widths = '375, 550, 750, 1000, 1300, 1600, 2000, 2400'
+  assign ps_sizes = sizes | default: '100vw'
+  assign ps_alt = alt
+  if ps_alt == blank
+    assign ps_alt = ps_img.alt | default: ''
+  endif
+-%}
+{%- if ps_img != blank -%}
+  {%- if loading == 'eager' -%}
+    {{ ps_img | image_url: width: 2400 | image_tag: widths: ps_widths, sizes: ps_sizes, loading: 'eager', fetchpriority: 'high', class: class, alt: ps_alt }}
+  {%- else -%}
+    {{ ps_img | image_url: width: 2400 | image_tag: widths: ps_widths, sizes: ps_sizes, loading: 'lazy', decoding: 'async', class: class, alt: ps_alt }}
+  {%- endif -%}
+{%- else -%}
+  {{ 'lifestyle-1' | placeholder_svg_tag: 'ps-placeholder' }}
+{%- endif -%}

@@ -1,0 +1,18 @@
+{%- doc -%}
+  Pillow-Side: call-to-action. Default behaviour scrolls to the native
+  Horizon buy box (#ps-buybox). No cart logic here.
+  @param {string} label - Button label
+  @param {string} [link] - Optional custom URL; overrides scroll behaviour
+  @param {string} [variant] - Optional variant title to preselect via Horizon's own picker
+  @param {string} [class] - Extra classes
+{%- enddoc -%}
+{%- if label != blank -%}
+  {%- if link != blank -%}
+    <a href="{{ link }}" class="ps-btn {{ class }}">{{ label | escape }}</a>
+  {%- else -%}
+    <a href="#ps-buybox" class="ps-btn {{ class }}" data-ps-buy{% if variant != blank %} data-ps-variant="{{ variant | escape }}"{% endif %}>
+      {{- label | escape -}}
+      <svg class="ps-btn__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  {%- endif -%}
+{%- endif -%}

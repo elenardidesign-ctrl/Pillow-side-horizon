@@ -1,0 +1,55 @@
+{%- doc -%}
+  Pillow-Side: tagline + benefit checklist placed inside Horizon's native
+  product details. Presentation only. Also provides the #ps-buybox anchor
+  used by every "Shop" CTA on the page.
+{%- enddoc -%}
+{%- render 'ps-assets' -%}
+{%- assign ps_benefits = block.settings.benefits | newline_to_br | split: '<br />' -%}
+<div class="ps-highlights" id="ps-buybox" tabindex="-1" {{ block.shopify_attributes }}>
+  {%- if block.settings.tagline != blank -%}
+    <p class="ps-highlights__tagline">{{ block.settings.tagline | escape }}</p>
+  {%- endif -%}
+  {%- if block.settings.benefits != blank -%}
+    <ul class="ps-highlights__list" role="list">
+      {%- for ps_b in ps_benefits -%}
+        {%- assign ps_bt = ps_b | strip -%}
+        {%- if ps_bt != blank -%}
+          <li>
+            <svg class="ps-highlights__check" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+              <circle cx="10" cy="10" r="9.25" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".35"/>
+              <path d="M6 10.4l2.6 2.5L14 7.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>{{ ps_bt | escape }}</span>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "PS · Highlights",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Blackout built for people who roll over."
+    },
+    {
+      "type": "textarea",
+      "id": "benefits",
+      "label": "Benefits",
+      "info": "One benefit per line.",
+      "default": "Designed for side & combination sleepers\n3D eye clearance\nLow-profile pillow-side fit"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PS · Highlights"
+    }
+  ]
+}
+{% endschema %}

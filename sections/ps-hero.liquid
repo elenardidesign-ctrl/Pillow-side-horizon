@@ -1,0 +1,96 @@
+{%- render 'ps-assets' -%}
+{%- assign s = section.settings -%}
+<section
+  class="ps-page ps-hero ps-hero--{{ s.position }} ps-hero--tone-{{ s.text_tone }}{% if s.reserve_sticky %} ps-hero--sticky-space{% endif %}"
+  style="--ps-overlay: {{ s.overlay | divided_by: 100.0 }}; --ps-focal: {{ s.focal_x }}% {{ s.focal_y }}%; --ps-hero-min: {{ s.min_height }}svh;"
+>
+  <div class="ps-hero__inner">
+    <div class="ps-hero__media ps-reveal-media ps-reveal">
+      {%- if s.mobile_image != blank -%}
+        <div class="ps-hero__img ps-hero__img--mobile">
+          {%- render 'ps-image', image: s.mobile_image, alt: s.image_alt, sizes: '100vw', loading: s.loading -%}
+        </div>
+        <div class="ps-hero__img ps-hero__img--desktop">
+          {%- render 'ps-image', image: s.image, fallback: s.fallback_media, ps_product: product, alt: s.image_alt, sizes: '100vw', loading: s.loading -%}
+        </div>
+      {%- else -%}
+        <div class="ps-hero__img">
+          {%- render 'ps-image', image: s.image, fallback: s.fallback_media, ps_product: product, alt: s.image_alt, sizes: '100vw', loading: s.loading -%}
+        </div>
+      {%- endif -%}
+      <span class="ps-hero__scrim" aria-hidden="true"></span>
+    </div>
+
+    <div class="ps-hero__content ps-reveal">
+      {%- if s.eyebrow != blank -%}
+        <p class="ps-eyebrow">{{ s.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- render 'ps-heading', text: s.heading, class: 'ps-heading--xl' -%}
+      {%- if s.body != blank -%}
+        <div class="ps-body ps-body--lead">{{ s.body }}</div>
+      {%- endif -%}
+      {%- if s.brand_title != blank or s.brand_line != blank -%}
+        <p class="ps-brandline">
+          {%- if s.brand_title != blank -%}<strong>{{ s.brand_title | escape }}</strong>{%- endif -%}
+          {%- if s.brand_line != blank -%}<span>{{ s.brand_line | escape }}</span>{%- endif -%}
+        </p>
+      {%- endif -%}
+      {%- render 'ps-cta', label: s.cta_label, link: s.cta_link, variant: s.cta_variant, class: 'ps-btn--on-media' -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "PS · Full-bleed story",
+  "tag": "div",
+  "class": "ps-shell",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "info": "One visual line per line break.", "default": "Blackout built\nfor people\nwho roll over." },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Your sleep mask shouldn't only work when you're lying perfectly still.</p>" },
+    { "type": "text", "id": "brand_title", "label": "Brand name line" },
+    { "type": "text", "id": "brand_line", "label": "Brand tagline" },
+    { "type": "header", "content": "Button" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "info": "Leave empty to hide the button." },
+    { "type": "url", "id": "cta_link", "label": "Custom link", "info": "Leave empty to scroll to the product buy box." },
+    { "type": "text", "id": "cta_variant", "label": "Preselect variant (optional)", "info": "Exact variant name, e.g. 2-Pack. Uses the theme's own variant picker; if not found, it only scrolls." },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile image (optional)" },
+    { "type": "range", "id": "fallback_media", "label": "Fallback: product media position", "info": "Used when no image is selected. 0 = none.", "min": 0, "max": 20, "step": 1, "default": 3 },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Woman sleeping on her side at night wearing the Pillow-Side contoured sleep mask" },
+    { "type": "range", "id": "focal_x", "label": "Crop focus horizontal", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 60 },
+    { "type": "range", "id": "focal_y", "label": "Crop focus vertical", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 40 },
+    {
+      "type": "select", "id": "loading", "label": "Image loading", "default": "lazy",
+      "info": "Use Eager only if this section is the first thing visible on the page.",
+      "options": [
+        { "value": "lazy", "label": "Lazy" },
+        { "value": "eager", "label": "Eager" }
+      ]
+    },
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select", "id": "position", "label": "Text position", "default": "bottom-left",
+      "options": [
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "center-left", "label": "Center left" },
+        { "value": "center", "label": "Center" }
+      ]
+    },
+    {
+      "type": "select", "id": "text_tone", "label": "Text color", "default": "light",
+      "options": [
+        { "value": "light", "label": "Light (for dark images)" },
+        { "value": "dark", "label": "Dark (for bright images)" }
+      ]
+    },
+    { "type": "range", "id": "overlay", "label": "Image overlay strength", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 45 },
+    { "type": "range", "id": "min_height", "label": "Minimum height", "min": 60, "max": 100, "step": 5, "unit": "%", "default": 90, "info": "Percentage of the screen height." },
+    { "type": "checkbox", "id": "reserve_sticky", "label": "Reserve space for sticky add-to-cart on mobile", "default": false, "info": "Enable on the last section of the page." }
+  ],
+  "presets": [{ "name": "PS · Full-bleed story" }]
+}
+{% endschema %}

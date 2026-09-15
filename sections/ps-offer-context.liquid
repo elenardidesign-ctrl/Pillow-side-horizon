@@ -1,0 +1,186 @@
+{%- render 'ps-assets' -%}
+{%- liquid
+  assign s = section.settings
+
+  # Base (single-unit) price = variant of the first offer whose "units" is 1.
+  # Everything transactional comes from Shopify; nothing is hardcoded.
+  assign ps_base_price = 0
+  for b in section.blocks
+    if b.settings.units == 1 and ps_base_price == 0
+      assign ps_bt = b.settings.variant_title | strip | downcase
+      for v in product.variants
+        assign ps_vt = v.title | strip | downcase
+        if ps_vt == ps_bt
+          assign ps_base_price = v.price
+          break
+        endif
+      endfor
+    endif
+  endfor
+-%}
+<section class="ps-page ps-offer ps-theme--{{ s.background }} ps-pad--{{ s.spacing }}">
+  <div class="ps-wrap">
+    <header class="ps-offer__head ps-reveal">
+      {%- if s.eyebrow != blank -%}
+        <p class="ps-eyebrow">{{ s.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- render 'ps-heading', text: s.heading, class: 'ps-heading--lg' -%}
+      {%- if s.intro != blank -%}
+        <div class="ps-body">{{ s.intro }}</div>
+      {%- endif -%}
+    </header>
+
+    <div class="ps-split ps-split--media-left ps-split--m-media-first ps-offer__grid">
+      <div class="ps-split__media">
+        <figure class="ps-media ps-media--natural ps-reveal ps-reveal-media">
+          {%- render 'ps-image',
+            image: s.image,
+            fallback: s.fallback_media,
+            ps_product: product,
+            alt: s.image_alt,
+            sizes: '(min-width: 990px) 45vw, 100vw'
+          -%}
+        </figure>
+      </div>
+
+      <div class="ps-split__text">
+        <div class="ps-offers">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign ps_match = nil
+              assign ps_target = block.settings.variant_title | strip | downcase
+              for v in product.variants
+                assign ps_vt = v.title | strip | downcase
+                if ps_vt == ps_target
+                  assign ps_match = v
+                  break
+                endif
+              endfor
+
+              assign ps_savings = 0
+              if ps_match and block.settings.units > 1 and ps_base_price > 0
+                assign ps_expected = ps_base_price | times: block.settings.units
+                if ps_expected > ps_match.price
+                  assign ps_savings = ps_expected | minus: ps_match.price
+                endif
+              endif
+              assign ps_uses = block.settings.use_cases | newline_to_br | split: '<br />'
+            -%}
+            <article class="ps-offer__card ps-reveal" style="--ps-delay: {{ forloop.index0 | times: 0.08 }}s" {{ block.shopify_attributes }}>
+              <div class="ps-offer__top">
+                <h3 class="ps-offer__name">{{ block.settings.label | escape }}</h3>
+                <p class="ps-offer__price">
+                  {%- if ps_match -%}
+                    {{ ps_match.price | money }}
+                  {%- else -%}
+                    {{ block.settings.fallback_price | escape }}
+                  {%- endif -%}
+                </p>
+              </div>
+
+              {%- if block.settings.subtitle != blank -%}
+                <p class="ps-offer__sub">{{ block.settings.subtitle | escape }}</p>
+              {%- endif -%}
+
+              {%- if ps_savings > 0 -%}
+                <p class="ps-offer__save">
+                  Save {{ ps_savings | money }} {{ block.settings.savings_suffix | escape }}
+                </p>
+              {%- elsif ps_match == nil and block.settings.savings_fallback != blank -%}
+                <p class="ps-offer__save">{{ block.settings.savings_fallback | escape }}</p>
+              {%- endif -%}
+
+              {%- if ps_match and ps_match.available == false -%}
+                <p class="ps-offer__status">Currently unavailable</p>
+              {%- endif -%}
+
+              {%- if block.settings.use_cases != blank -%}
+                <ul class="ps-offer__uses" role="list">
+                  {%- for u in ps_uses -%}
+                    {%- assign ps_ut = u | strip -%}
+                    {%- if ps_ut != blank -%}<li>{{ ps_ut | escape }}</li>{%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+
+              {%- if s.preselect -%}
+                {%- render 'ps-cta', label: block.settings.cta_label, variant: block.settings.variant_title, class: 'ps-btn--block' -%}
+              {%- else -%}
+                {%- render 'ps-cta', label: block.settings.cta_label, class: 'ps-btn--block' -%}
+              {%- endif -%}
+            </article>
+          {%- endfor -%}
+        </div>
+        {%- if s.footnote != blank -%}
+          <p class="ps-footnote">{{ s.footnote | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "PS · Offer context",
+  "tag": "div",
+  "class": "ps-shell",
+  "enabled_on": { "templates": ["product"] },
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "info": "One visual line per line break.", "default": "Choose your setup." },
+    { "type": "richtext", "id": "intro", "label": "Intro" },
+    { "type": "checkbox", "id": "preselect", "label": "Buttons preselect the matching variant", "default": true, "info": "Uses the theme's own variant picker. If the variant isn't found, the button only scrolls to the buy box." },
+    { "type": "text", "id": "footnote", "label": "Footnote", "default": "Checkout always uses the live price of the option you select above." },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "1 Mask / 2-Pack image" },
+    { "type": "range", "id": "fallback_media", "label": "Fallback: product media position", "info": "Used when no image is selected. 0 = none.", "min": 0, "max": 20, "step": 1, "default": 8 },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "One Pillow-Side mask above a two-pack of Pillow-Side masks" },
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select", "id": "background", "label": "Background", "default": "cream",
+      "options": [
+        { "value": "cream", "label": "Warm off-white" },
+        { "value": "white", "label": "White" },
+        { "value": "stone", "label": "Soft neutral" },
+        { "value": "night", "label": "Night" },
+        { "value": "ink", "label": "Charcoal" }
+      ]
+    },
+    {
+      "type": "select", "id": "spacing", "label": "Vertical spacing", "default": "lg",
+      "options": [
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "offer",
+      "name": "Offer",
+      "settings": [
+        { "type": "text", "id": "variant_title", "label": "Shopify variant name", "info": "Must match the variant name exactly (case-insensitive), e.g. 1 Mask or 2-Pack. Price is read from Shopify." },
+        { "type": "range", "id": "units", "label": "Masks in this option", "min": 1, "max": 6, "step": 1, "default": 1, "info": "Used to calculate real savings vs. buying singles." },
+        { "type": "text", "id": "label", "label": "Display name", "default": "1 Mask" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle" },
+        { "type": "text", "id": "savings_suffix", "label": "Savings text after amount", "default": "compared with buying two separately." },
+        { "type": "text", "id": "fallback_price", "label": "Fallback price text", "info": "Shown only if the variant name isn't found." },
+        { "type": "text", "id": "savings_fallback", "label": "Fallback savings text", "info": "Shown only if the variant name isn't found." },
+        { "type": "textarea", "id": "use_cases", "label": "Use cases", "info": "One per line." },
+        { "type": "text", "id": "cta_label", "label": "Button label", "default": "Select" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PS · Offer context",
+      "blocks": [
+        { "type": "offer", "settings": { "variant_title": "1 Mask", "units": 1, "label": "1 Mask", "subtitle": "Best for: your nightly setup.", "fallback_price": "$54.95", "cta_label": "Select 1 Mask" } },
+        { "type": "offer", "settings": { "variant_title": "2-Pack", "units": 2, "label": "2-Pack", "subtitle": "Two masks, one order.", "fallback_price": "$94.95", "savings_fallback": "Save $14.95 compared with buying two separately.", "use_cases": "One at home + one for travel\nOne for each partner\nBackup while one is being washed", "cta_label": "Select 2-Pack" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

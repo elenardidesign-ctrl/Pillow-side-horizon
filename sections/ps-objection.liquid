@@ -1,0 +1,46 @@
+{%- render 'ps-assets' -%}
+{%- assign s = section.settings -%}
+<section class="ps-page ps-objection ps-theme--{{ s.background }} ps-pad--{{ s.spacing }}">
+  <div class="ps-wrap ps-objection__inner ps-reveal">
+    <span class="ps-rule" aria-hidden="true"></span>
+    {%- render 'ps-heading', text: s.heading, class: 'ps-heading--lg ps-objection__quote' -%}
+    <div class="ps-body ps-body--lead ps-objection__body">{{ s.body }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "PS · Objection",
+  "tag": "div",
+  "class": "ps-shell",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "textarea", "id": "heading", "label": "Heading", "info": "One visual line per line break.", "default": "“Why not just buy\na $15 sleep mask?”" },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p><strong>You can.</strong></p><p>If it stays dark, stays comfortable and doesn't bother you when you roll over, you probably don't need another one.</p><p>Pillow-Side is for the sleeper who's already discovered the difference between a mask that blocks light in theory — and one that still feels right when their face meets the pillow.</p>"
+    },
+    {
+      "type": "select", "id": "background", "label": "Background", "default": "white",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "cream", "label": "Warm off-white" },
+        { "value": "stone", "label": "Soft neutral" },
+        { "value": "night", "label": "Night" },
+        { "value": "ink", "label": "Charcoal" }
+      ]
+    },
+    {
+      "type": "select", "id": "spacing", "label": "Vertical spacing", "default": "lg",
+      "options": [
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "PS · Objection" }]
+}
+{% endschema %}

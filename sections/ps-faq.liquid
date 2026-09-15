@@ -1,0 +1,79 @@
+{%- render 'ps-assets' -%}
+{%- assign s = section.settings -%}
+<section class="ps-page ps-faq ps-theme--{{ s.background }} ps-pad--{{ s.spacing }}">
+  <div class="ps-wrap ps-faq__grid">
+    <header class="ps-faq__head ps-reveal">
+      {%- if s.eyebrow != blank -%}
+        <p class="ps-eyebrow">{{ s.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- render 'ps-heading', text: s.heading, class: 'ps-heading--lg' -%}
+    </header>
+    <div class="ps-faq__list ps-reveal">
+      {%- for block in section.blocks -%}
+        <details class="ps-faq__item" {{ block.shopify_attributes }}{% if s.open_first and forloop.first %} open{% endif %}>
+          <summary class="ps-faq__summary">
+            <h3 class="ps-faq__q">{{ block.settings.question | escape }}</h3>
+            <span class="ps-faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="ps-faq__a ps-body">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "PS · FAQ",
+  "tag": "div",
+  "class": "ps-shell",
+  "enabled_on": { "templates": ["product"] },
+  "max_blocks": 16,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Questions" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "info": "One visual line per line break.", "default": "Before you\nroll over." },
+    { "type": "checkbox", "id": "open_first", "label": "Open first question", "default": false },
+    {
+      "type": "select", "id": "background", "label": "Background", "default": "cream",
+      "options": [
+        { "value": "cream", "label": "Warm off-white" },
+        { "value": "white", "label": "White" },
+        { "value": "stone", "label": "Soft neutral" },
+        { "value": "night", "label": "Night" },
+        { "value": "ink", "label": "Charcoal" }
+      ]
+    },
+    {
+      "type": "select", "id": "spacing", "label": "Vertical spacing", "default": "lg",
+      "options": [
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PS · FAQ",
+      "blocks": [
+        { "type": "question", "settings": { "question": "Is Pillow-Side designed for side sleepers?", "answer": "<p>Yes. Its design centers on side and combination sleepers, particularly the places where a mask meets the pillow.</p>" } },
+        { "type": "question", "settings": { "question": "Will it touch my eyelashes?", "answer": "<p>The 3D eye area is designed to create additional clearance compared with a traditional flat mask.</p>" } },
+        { "type": "question", "settings": { "question": "Does it guarantee 100% blackout?", "answer": "<p>No. Fit varies by face shape, so we don't promise total blackout for everyone. The contoured design is intended to reduce common light-entry points when properly fitted.</p>" } },
+        { "type": "question", "settings": { "question": "Can I use it if I sleep on my back?", "answer": "<p>Yes. Side sleeping is the more demanding use case, but the mask can also be worn while sleeping on your back.</p>" } },
+        { "type": "question", "settings": { "question": "Is it weighted?", "answer": "<p>No. Pillow-Side is not a weighted sleep mask.</p>" } },
+        { "type": "question", "settings": { "question": "Is this a treatment for insomnia?", "answer": "<p>No. Pillow-Side is a sleep accessory designed to create a darker, more comfortable sleep environment. It is not a medical device or treatment.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
