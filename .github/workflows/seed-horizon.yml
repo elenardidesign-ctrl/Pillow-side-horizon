@@ -1,0 +1,45 @@
+name: Seed Horizon 4.1.5 base theme
+
+on:
+  push:
+    paths:
+      - '.github/workflows/seed-horizon.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Clone official Shopify Horizon
+        run: git clone --depth 1 https://github.com/Shopify/horizon.git /tmp/horizon
+
+      - name: Verify Horizon version
+        run: |
+          grep -q '"theme_version": "4.1.5"' /tmp/horizon/config/settings_schema.json
+
+      - name: Replace placeholder with clean Horizon theme folders
+        run: |
+          rm -rf assets blocks config layout locales sections snippets templates
+          for dir in assets blocks config layout locales sections snippets templates; do
+            cp -R "/tmp/horizon/$dir" "$dir"
+          done
+
+      - name: Commit Horizon base
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets blocks config layout locales sections snippets templates
+          if git diff --cached --quiet; then
+            echo "No base changes to commit."
+            exit 0
+          fi
+          git commit -m "Seed Shopify Horizon 4.1.5 base theme"
+          git push origin HEAD:main
