@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -30,6 +39,7 @@
             "media_columns": "two",
             "image_gap": 4,
             "large_first_image": false,
+            "icons_style": "arrow",
             "slideshow_controls_style": "counter",
             "slideshow_mobile_controls_style": "dots",
             "thumbnail_position": "right",
@@ -108,6 +118,7 @@
                 "border_opacity": 100,
                 "border_color": "",
                 "border_radius": 0,
+                "link": "",
                 "open_in_new_tab": false,
                 "placeholder": "",
                 "padding-block-start": 0,
@@ -169,6 +180,14 @@
                 "text_xrnftG",
                 "price_tVjtKg"
               ]
+            },
+            "ps_highlights": {
+              "type": "ps-buybox-highlights",
+              "settings": {
+                "tagline": "Blackout built for people who roll over.",
+                "benefits": "Designed for side & combination sleepers\n3D eye clearance\nLow-profile pillow-side fit"
+              },
+              "blocks": {}
             },
             "divider_VJhene": {
               "type": "_divider",
@@ -249,8 +268,8 @@
                   "type": "add-to-cart",
                   "static": true,
                   "settings": {
-                    "style_class": "button",
-                    "custom_button_background": "{{ settings.color_palette.foreground }}",
+                    "style_class": "button-custom",
+                    "custom_button_background": "#FF9900",
                     "custom_button_text": "{{ settings.color_palette.background }}",
                     "custom_button_border": "{{ settings.color_palette.background }}"
                   },
@@ -290,13 +309,6 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "ps_highlights": {
-              "type": "ps-buybox-highlights",
-              "settings": {
-                "tagline": "Blackout built for people who roll over.",
-                "benefits": "Designed for side & combination sleepers\n3D eye clearance\nLow-profile pillow-side fit"
-              }
             }
           },
           "block_order": [
@@ -330,11 +342,11 @@
         "eyebrow": "The side-sleeper problem",
         "heading": "Your mask works.\nUntil you roll over.",
         "body": "<p>Most sleep masks look perfectly comfortable when you're lying still.</p><p>Then you turn onto your side.</p><p>The pillow pushes against the mask. It shifts. A small gap can open around the nose. The eye area starts feeling crowded.</p><p>So you tighten the strap.</p><p><strong>Now you've solved one problem by creating another.</strong></p>",
+        "image": "shopify://shop_images/ps-s02-problem.jpg",
         "fallback_media": 7,
         "image_alt": "Side-by-side comparison: an ordinary flat mask letting light in near the nose, and the Pillow-Side contoured mask sitting flush against the pillow",
         "background": "cream",
-        "spacing": "lg",
-        "image": "shopify://shop_images/ps-s02-problem.jpg"
+        "spacing": "lg"
       }
     },
     "ps_big_idea": {
@@ -343,6 +355,12 @@
         "eyebrow": "",
         "heading": "Blackout built\nfor people\nwho roll over.",
         "body": "<p>Your sleep mask shouldn't only work when you're lying perfectly still.</p>",
+        "brand_title": "",
+        "brand_line": "",
+        "cta_label": "",
+        "cta_link": "",
+        "cta_variant": "",
+        "image": "shopify://shop_images/ps-s03-bigidea-night.jpg",
         "fallback_media": 3,
         "image_alt": "Woman sleeping on her side at night wearing the Pillow-Side contoured sleep mask",
         "focal_x": 65,
@@ -352,8 +370,7 @@
         "text_tone": "light",
         "overlay": 45,
         "min_height": 90,
-        "reserve_sticky": false,
-        "image": "shopify://shop_images/ps-s03-bigidea-night.jpg"
+        "reserve_sticky": false
       }
     },
     "ps_mechanism": {
@@ -370,15 +387,6 @@
     },
     "ps_contact_points": {
       "type": "ps-mechanism-callout",
-      "settings": {
-        "eyebrow": "Pillow-Side Profile™",
-        "heading": "Built around\nthree contact points.",
-        "fallback_media": 6,
-        "image_alt": "Pillow-Side mask with close-ups of the 3D eye space, contoured nose fit and low-profile sides",
-        "background": "white",
-        "spacing": "lg",
-        "image": "shopify://shop_images/ps-s05-callout.jpg"
-      },
       "blocks": {
         "cp_eye": {
           "type": "feature",
@@ -406,7 +414,16 @@
         "cp_eye",
         "cp_nose",
         "cp_sides"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Pillow-Side Profile™",
+        "heading": "Built around\nthree contact points.",
+        "image": "shopify://shop_images/ps-s05-callout.jpg",
+        "fallback_media": 6,
+        "image_alt": "Pillow-Side mask with close-ups of the 3D eye space, contoured nose fit and low-profile sides",
+        "background": "white",
+        "spacing": "lg"
+      }
     },
     "ps_story_eyes": {
       "type": "ps-feature-story",
@@ -429,14 +446,14 @@
         "eyebrow": "02 — Nose fit",
         "heading": "Darkness shouldn't\ndepend on\novertightening.",
         "body": "<p>A contoured nose area helps reduce one of the most common gaps where outside light can sneak in.</p>",
+        "image": "shopify://shop_images/ps-s07-nose-closeup.jpg",
         "fallback_media": 5,
         "image_alt": "Close-up of the Pillow-Side mask's contoured nose area on a side sleeper",
         "focal_x": 60,
         "focal_y": 55,
         "layout": "media-left",
         "background": "stone",
-        "spacing": "md",
-        "image": "shopify://shop_images/ps-s07-nose-closeup.jpg"
+        "spacing": "md"
       }
     },
     "ps_story_pillow": {
@@ -461,6 +478,7 @@
         "heading": "Back.\nSide.\nOther side.\nRepeat.",
         "cascade": true,
         "body": "<p>Sleep isn't a product photo.</p><p>You move.</p><p><strong>Your mask should be designed with that in mind.</strong></p>",
+        "image": "shopify://shop_images/ps-s09-behavior.jpg",
         "fallback_media": 3,
         "image_alt": "Woman sleeping comfortably on her side wearing the Pillow-Side mask",
         "focal_x": 45,
@@ -468,8 +486,7 @@
         "media_position": "right",
         "mobile_media_first": false,
         "background": "stone",
-        "spacing": "lg",
-        "image": "shopify://shop_images/ps-s09-behavior.jpg"
+        "spacing": "lg"
       }
     },
     "ps_objection": {
@@ -483,17 +500,6 @@
     },
     "ps_offer": {
       "type": "ps-offer-context",
-      "settings": {
-        "eyebrow": "",
-        "heading": "Choose your setup.",
-        "preselect": true,
-        "footnote": "Checkout always uses the live price of the option you select above.",
-        "fallback_media": 8,
-        "image_alt": "One Pillow-Side mask above a two-pack of Pillow-Side masks",
-        "background": "cream",
-        "spacing": "lg",
-        "image": "shopify://shop_images/ps-s11-offer.jpg"
-      },
       "blocks": {
         "offer_single": {
           "type": "offer",
@@ -527,24 +533,22 @@
       "block_order": [
         "offer_single",
         "offer_bundle"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Choose your setup.",
+        "intro": "",
+        "preselect": true,
+        "footnote": "Checkout always uses the live price of the option you select above.",
+        "image": "shopify://shop_images/ps-s11-offer.jpg",
+        "fallback_media": 8,
+        "image_alt": "One Pillow-Side mask above a two-pack of Pillow-Side masks",
+        "background": "cream",
+        "spacing": "lg"
+      }
     },
     "ps_bright_room": {
       "type": "ps-lifestyle-break",
-      "settings": {
-        "eyebrow": "",
-        "heading": "Darkness,\neven when\nthe room isn't.",
-        "cascade": false,
-        "body": "<p>Bright mornings, long flights, unfamiliar rooms. Bring your own dark.</p>",
-        "fallback_media": 4,
-        "image_alt": "Woman napping in a bright, sunlit bedroom wearing the Pillow-Side mask",
-        "focal_x": 40,
-        "focal_y": 40,
-        "media_position": "left",
-        "mobile_media_first": true,
-        "background": "white",
-        "spacing": "lg"
-      },
       "blocks": {
         "uc_1": {
           "type": "tag",
@@ -590,17 +594,24 @@
         "uc_4",
         "uc_5",
         "uc_6"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Darkness,\neven when\nthe room isn't.",
+        "cascade": false,
+        "body": "<p>Bright mornings, long flights, unfamiliar rooms. Bring your own dark.</p>",
+        "fallback_media": 4,
+        "image_alt": "Woman napping in a bright, sunlit bedroom wearing the Pillow-Side mask",
+        "focal_x": 40,
+        "focal_y": 40,
+        "media_position": "left",
+        "mobile_media_first": true,
+        "background": "white",
+        "spacing": "lg"
+      }
     },
     "ps_faq": {
       "type": "ps-faq",
-      "settings": {
-        "eyebrow": "Questions",
-        "heading": "Before you\nroll over.",
-        "open_first": false,
-        "background": "cream",
-        "spacing": "lg"
-      },
       "blocks": {
         "q1": {
           "type": "question",
@@ -652,7 +663,14 @@
         "q4",
         "q5",
         "q6"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Questions",
+        "heading": "Before you\nroll over.",
+        "open_first": false,
+        "background": "cream",
+        "spacing": "lg"
+      }
     },
     "ps_final": {
       "type": "ps-hero",
@@ -663,6 +681,7 @@
         "brand_title": "Pillow-Side™",
         "brand_line": "Blackout Built for People Who Roll Over.",
         "cta_label": "Shop Pillow-Side",
+        "cta_link": "",
         "cta_variant": "",
         "fallback_media": 3,
         "image_alt": "Woman asleep on her side in a warmly lit bedroom wearing the Pillow-Side mask",
