@@ -116,6 +116,24 @@
 
                 <div class="cart-drawer__summary">
                   {% render 'cart-summary', section_id: 'cart-drawer-section' %}
+
+                  {% if shop.enabled_payment_types.size > 0 %}
+                    <div
+                      class="cart-drawer__payment-badges"
+                      aria-label="Accepted payment methods"
+                    >
+                      <ul
+                        class="cart-drawer__payment-badges-list"
+                        role="list"
+                      >
+                        {% for type in shop.enabled_payment_types %}
+                          <li class="cart-drawer__payment-badge">
+                            {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  {% endif %}
                 </div>
               </scroll-hint>
             {%- endif -%}
@@ -211,6 +229,38 @@
     @media screen and (min-width: 750px) {
       --cart-drawer-summary-padding: var(--padding-2xl);
     }
+  }
+
+  .cart-drawer__summary .additional-checkout-buttons {
+    display: none;
+  }
+
+  .cart-drawer__payment-badges {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .cart-drawer__payment-badges-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .cart-drawer__payment-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cart-drawer__payment-badge svg {
+    display: block;
+    width: 38px;
+    height: auto;
   }
 
   .theme-drawer__dialog[cart-summary-sticky='false'] .cart-drawer__summary {
