@@ -1,7 +1,8 @@
 {%- doc -%}
-  Pillow-Side: loads the page-scoped stylesheet and script.
+  Pillow-Side: loads the page-scoped stylesheet, brand overrides and script.
   Repeated link tags resolve to one cached request; type="module"
   guarantees the script executes only once per page.
 {%- enddoc -%}
 {{ 'ps-product-page.css' | asset_url | stylesheet_tag }}
+{{ 'ps-brand-overrides.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'ps-product-page.js' | asset_url }}" type="module"></script>
