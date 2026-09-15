@@ -1,0 +1,87 @@
+/* Pillow-Side brand overrides
+   Presentation only: no cart, variant, form, inventory, or checkout logic. */
+
+:root {
+  --ps-cta-orange: #ff9900;
+  --ps-cta-orange-hover: #e88a00;
+  --ps-cta-orange-active: #d97f00;
+  --ps-cta-ink: #111111;
+}
+
+/* Pillow-Side landing-page CTAs */
+.ps-page {
+  --ps-btn-bg: var(--ps-cta-orange);
+  --ps-btn-fg: var(--ps-cta-ink);
+}
+
+.ps-page .ps-btn {
+  background: var(--ps-cta-orange);
+  color: var(--ps-cta-ink);
+  border-color: var(--ps-cta-orange);
+  opacity: 1;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.25s var(--ps-ease);
+}
+
+.ps-page .ps-btn:hover {
+  background: var(--ps-cta-orange-hover);
+  border-color: var(--ps-cta-orange-hover);
+  color: var(--ps-cta-ink);
+  opacity: 1;
+}
+
+.ps-page .ps-btn:active {
+  background: var(--ps-cta-orange-active);
+  border-color: var(--ps-cta-orange-active);
+}
+
+.ps-page .ps-btn:focus-visible {
+  outline-color: var(--ps-cta-ink);
+}
+
+/* Horizon native Add to Cart — visual override only. */
+product-form-component .add-to-cart-button.button,
+sticky-add-to-cart .add-to-cart-button.button {
+  --button-color-background: var(--ps-cta-orange);
+  --button-color-text: var(--ps-cta-ink);
+  --button-color-border: var(--ps-cta-orange);
+  background: var(--ps-cta-orange) !important;
+  color: var(--ps-cta-ink) !important;
+  border-color: var(--ps-cta-orange) !important;
+}
+
+product-form-component .add-to-cart-button.button:hover:not(:disabled),
+sticky-add-to-cart .add-to-cart-button.button:hover:not(:disabled) {
+  --button-color-background: var(--ps-cta-orange-hover);
+  --button-color-border: var(--ps-cta-orange-hover);
+  background: var(--ps-cta-orange-hover) !important;
+  border-color: var(--ps-cta-orange-hover) !important;
+  color: var(--ps-cta-ink) !important;
+}
+
+product-form-component .add-to-cart-button.button:active:not(:disabled),
+sticky-add-to-cart .add-to-cart-button.button:active:not(:disabled) {
+  --button-color-background: var(--ps-cta-orange-active);
+  --button-color-border: var(--ps-cta-orange-active);
+  background: var(--ps-cta-orange-active) !important;
+  border-color: var(--ps-cta-orange-active) !important;
+}
+
+/* Shopify only permits reliable styling of unbranded dynamic checkout buttons.
+   Branded providers (Shop Pay, Apple Pay, etc.) keep their required native branding. */
+.shopify-payment-button__button--unbranded {
+  background: var(--ps-cta-orange) !important;
+  color: var(--ps-cta-ink) !important;
+  border-color: var(--ps-cta-orange) !important;
+}
+
+.shopify-payment-button__button--unbranded:hover {
+  background: var(--ps-cta-orange-hover) !important;
+  color: var(--ps-cta-ink) !important;
+}
+
+.shopify-payment-button__button--unbranded:active {
+  background: var(--ps-cta-orange-active) !important;
+}
