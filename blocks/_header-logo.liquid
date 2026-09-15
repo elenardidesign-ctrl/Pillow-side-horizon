@@ -1,6 +1,8 @@
 {% liquid
   assign block_settings = block.settings
   assign use_inverse_logo = false
+  assign pillow_side_logo_url = 'https://cdn.shopify.com/s/files/1/0740/6246/3078/files/pillow-side-logo.png?v=1789507016'
+  assign pillow_side_logo_ratio = 3.0
 
   if section.settings.enable_transparent_header_home and template.name == 'index' and section.settings.home_inverse_logo == true
     assign use_inverse_logo = true
@@ -23,7 +25,8 @@
 
 {% comment %}
   Output all logo variants, use CSS to hide/show the appropriate one
-  based on the .header[transparent] selector
+  based on the .header[transparent] selector. If no logo is configured in
+  Theme settings, Pillow-Side's official logo is used as a safe fallback.
 {% endcomment %}
 <a
   {% if template.name == 'index' and block_settings.hide_logo_on_home_page %}
@@ -41,10 +44,22 @@
   {{ block.shopify_attributes }}
 >
   {% liquid
-    assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil
-    assign logo_width_mobile = settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil
-    assign inverse_logo_width = settings.logo_height | times: inverse_logo.aspect_ratio | ceil
-    assign inverse_logo_width_mobile = settings.logo_height_mobile | times: inverse_logo.aspect_ratio | ceil
+    if settings.logo != blank
+      assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil
+      assign logo_width_mobile = settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil
+    else
+      assign logo_width = settings.logo_height | times: pillow_side_logo_ratio | ceil
+      assign logo_width_mobile = settings.logo_height_mobile | times: pillow_side_logo_ratio | ceil
+    endif
+
+    if inverse_logo != blank
+      assign inverse_logo_width = settings.logo_height | times: inverse_logo.aspect_ratio | ceil
+      assign inverse_logo_width_mobile = settings.logo_height_mobile | times: inverse_logo.aspect_ratio | ceil
+    else
+      assign inverse_logo_width = logo_width
+      assign inverse_logo_width_mobile = logo_width_mobile
+    endif
+
     assign logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
     assign inverse_logo_style = '--header-logo-image-width: ' | append: inverse_logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: inverse_logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
   %}
@@ -55,14 +70,26 @@
     {% endif %}
     data-testid="header-logo"
   >
-    {% render 'image',
-      image: settings.logo,
-      class: 'header-logo__image',
-      height: settings.logo_height,
-      alt_text_fallback: alt_text_fallback,
-      text_fallback: shop.name,
-      style: logo_style
-    %}
+    {% if settings.logo != blank %}
+      {% render 'image',
+        image: settings.logo,
+        class: 'header-logo__image',
+        height: settings.logo_height,
+        alt_text_fallback: alt_text_fallback,
+        text_fallback: shop.name,
+        style: logo_style
+      %}
+    {% else %}
+      <img
+        src="{{ pillow_side_logo_url }}"
+        class="header-logo__image"
+        alt="Pillow-Side"
+        width="{{ logo_width }}"
+        height="{{ settings.logo_height }}"
+        loading="eager"
+        style="{{ logo_style }}"
+      >
+    {% endif %}
   </span>
 
   {% if use_inverse_logo %}
@@ -70,14 +97,26 @@
       class="header-logo__transparent-header-image-container"
       data-testid="header-logo-inverse"
     >
-      {% render 'image',
-        image: inverse_logo,
-        class: 'header-logo__image',
-        height: settings.logo_height,
-        alt_text_fallback: alt_text_fallback,
-        text_fallback: shop.name,
-        style: inverse_logo_style
-      %}
+      {% if inverse_logo != blank %}
+        {% render 'image',
+          image: inverse_logo,
+          class: 'header-logo__image',
+          height: settings.logo_height,
+          alt_text_fallback: alt_text_fallback,
+          text_fallback: shop.name,
+          style: inverse_logo_style
+        %}
+      {% else %}
+        <img
+          src="{{ pillow_side_logo_url }}"
+          class="header-logo__image"
+          alt="Pillow-Side"
+          width="{{ inverse_logo_width }}"
+          height="{{ settings.logo_height }}"
+          loading="eager"
+          style="{{ inverse_logo_style }}"
+        >
+      {% endif %}
     </span>
   {% endif %}
 </a>
