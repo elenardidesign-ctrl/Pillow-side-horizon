@@ -19,6 +19,35 @@
     const mobileButton = root.querySelector('[data-wm-mobile-atc]');
     const form = root.querySelector('.wm-form');
 
+    // The custom landing originally used a plain Shopify product form. That can
+    // add an item, but it bypasses Horizon's native AJAX cart pipeline, so the
+    // configured cart drawer does not reliably refresh/open. Upgrade the exact
+    // same form into Horizon's native product-form-component at runtime instead
+    // of creating a second cart implementation.
+    if (form && !form.closest('product-form-component')) {
+      const marker = document.createComment('wm-product-form');
+      form.parentNode?.insertBefore(marker, form);
+
+      const productForm = document.createElement('product-form-component');
+      productForm.dataset.sectionId = root.dataset.sectionId || '';
+      productForm.dataset.quantityDefault = '1';
+      productForm.setAttribute('data-quantity-error-max', 'The maximum available quantity has been reached.');
+      productForm.setAttribute('on:submit', '/handleSubmit');
+
+      const liveRegion = document.createElement('div');
+      liveRegion.className = 'visually-hidden';
+      liveRegion.setAttribute('aria-live', 'assertive');
+      liveRegion.setAttribute('role', 'status');
+      liveRegion.setAttribute('aria-atomic', 'true');
+      liveRegion.setAttribute('ref', 'liveRegion');
+
+      if (variantInput) variantInput.setAttribute('ref', 'variantId');
+      form.dataset.type = 'add-to-cart-form';
+
+      productForm.append(liveRegion, form);
+      marker.replaceWith(productForm);
+    }
+
     const money = (cents) => {
       try {
         return new Intl.NumberFormat(document.documentElement.lang || 'en-US', {
