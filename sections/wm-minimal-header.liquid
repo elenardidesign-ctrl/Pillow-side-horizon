@@ -12,13 +12,11 @@
       >
     </a>
 
-    {% if section.settings.menu != blank %}
-      <nav class="wm-local-header__nav" aria-label="Main navigation">
-        {% for link in section.settings.menu.links limit: 4 %}
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        {% endfor %}
-      </nav>
-    {% endif %}
+    <nav class="wm-local-header__nav" aria-label="Main navigation">
+      <a href="/pages/faq">FAQ</a>
+      <a href="/pages/contact">Contact</a>
+      <a href="/pages/track-order">Track Order</a>
+    </nav>
 
     <div class="wm-local-header__actions">
       <a href="{{ routes.search_url }}" aria-label="Search" class="wm-local-header__icon">⌕</a>
@@ -51,9 +49,7 @@
   "name":"Mattress topper header",
   "tag":"section",
   "class":"section-wm-minimal-header",
-  "settings":[
-    {"type":"link_list","id":"menu","label":"Menu","default":"main-menu"}
-  ],
+  "settings":[],
   "presets":[{"name":"Mattress topper header"}]
 }
 {% endschema %}
