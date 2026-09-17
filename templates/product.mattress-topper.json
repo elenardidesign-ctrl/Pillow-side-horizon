@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "wm_product_landing": {
+      "type": "wm-product-landing",
+      "settings": {
+        "promo_text": "A more comfortable bed starts with one layer.",
+        "eyebrow": "Plush pillow-top mattress pad",
+        "subtitle": "A thick, quilted comfort layer designed to make your existing mattress feel softer and more inviting.",
+        "benefit_1": "Plush microfiber / polyester fill",
+        "benefit_2": "Quilted pillow-top construction",
+        "benefit_3": "Made for home and hotel-style bedding",
+        "benefit_4": "Multiple mattress sizes available",
+        "cta_label": "ADD TO CART",
+        "shipping_text": "Shipping timing and tracking details are shown at checkout and in your order confirmation.",
+        "action_heading": "See the comfort from every angle",
+        "action_body": "Use real product photos and video here to show the loft, quilting and how the topper sits on a finished bed.",
+        "story_heading": "Make your mattress feel noticeably plusher",
+        "story_body": "<p>You do not always need a new mattress to change the feel of your bed. A thick, quilted pillow-top layer adds softness on top of the mattress you already own.</p><p>The result is a more inviting sleep surface with the visual finish of a hotel-style bed.</p>",
+        "features_heading": "What makes this topper different",
+        "features_body": "A simple construction story: plush fill, quilted structure and an easy way to add softness to the bed you already have.",
+        "comparison_heading": "More than a thin mattress cover",
+        "faq_heading": "Frequently asked questions",
+        "guarantee_heading": "Know the terms before you buy",
+        "guarantee_body": "Your purchase is covered by the store policies shown at checkout. Review the return terms before ordering so there are no surprises."
+      }
+    }
+  },
+  "order": [
+    "wm_product_landing"
+  ]
+}
