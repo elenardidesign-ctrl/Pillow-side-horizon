@@ -40,9 +40,14 @@
         "value_body": "A new Queen mattress is roughly a $1,000 decision. CloudLoft is a $199 decision for the bed you are keeping this year. Not a replacement for a broken mattress. A comfort layer while you save for the replacement.",
         "faq_heading": "Straight answers."
       }
+    },
+    "wm_minimal_footer": {
+      "type": "wm-minimal-footer",
+      "settings": {}
     }
   },
   "order": [
-    "wm_product_landing"
+    "wm_product_landing",
+    "wm_minimal_footer"
   ]
 }
