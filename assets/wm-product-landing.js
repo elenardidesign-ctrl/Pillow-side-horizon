@@ -13,7 +13,7 @@
       <img src="${avatar}" alt="Illustrative customer avatar" width="54" height="54" style="width:54px;height:54px;border-radius:50%;object-fit:cover;flex:0 0 54px;">
       <div style="min-width:0;flex:1;">
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px;line-height:1;">
-          <strong style="font-size:13px;color:#00304E;">Customer research</strong>
+          <strong style="font-size:13px;color:#00304E;">May G.</strong>
           <span aria-hidden="true" style="font-size:13px;letter-spacing:1px;color:#F2B01E;">★★★★★</span>
         </div>
         <p style="margin:0;color:#0f2f45;font-size:13px;line-height:1.42;">“I’m considering a mattress topper because I can’t afford another mattress.”</p>
