@@ -1,5 +1,6 @@
 {{ 'wm-product-landing.css' | asset_url | stylesheet_tag }}
 {{ 'wm-research-copy.css' | asset_url | stylesheet_tag }}
+{{ 'wm-research-integrity.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'wm-product-landing.js' | asset_url }}" defer="defer"></script>
 
 {% liquid
@@ -70,14 +71,6 @@
 
       <div class="wm-price" data-wm-price-wrap>
         <span class="wm-price__current" data-wm-price>{{ current_variant.price | money }}</span>
-        <span class="wm-price__compare{% unless current_variant.compare_at_price > current_variant.price %} is-hidden{% endunless %}" data-wm-compare-price>
-          {% if current_variant.compare_at_price > current_variant.price %}{{ current_variant.compare_at_price | money }}{% endif %}
-        </span>
-        <span class="wm-price__save{% unless current_variant.compare_at_price > current_variant.price %} is-hidden{% endunless %}" data-wm-save>
-          {% if current_variant.compare_at_price > current_variant.price %}
-            Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}
-          {% endif %}
-        </span>
       </div>
 
       <ul class="wm-benefits" role="list">
@@ -127,13 +120,13 @@
 
       <p class="wm-stock{% unless current_variant.available %} is-sold-out{% endunless %}" data-wm-stock>
         <span class="wm-stock__dot" aria-hidden="true"></span>
-        {% if current_variant.available %}In stock and ready to order{% else %}Currently unavailable{% endif %}
+        {% if current_variant.available %}Available{% else %}Currently unavailable{% endif %}
       </p>
 
       <div class="wm-trust-row" role="list" aria-label="Purchase assurances">
         <div role="listitem"><strong>Secure checkout</strong><span>Protected payment</span></div>
         <div role="listitem"><strong>Tracked shipping</strong><span>Order updates</span></div>
-        <div role="listitem"><strong>Clear returns</strong><span>Terms before launch</span></div>
+        <div role="listitem"><strong>Clear returns</strong><span>Current store policy</span></div>
       </div>
 
       <div class="wm-accordions">
@@ -145,7 +138,7 @@
         </details>
         <details>
           <summary>Sizing & fit <span aria-hidden="true">+</span></summary>
-          <div class="wm-accordion-content"><p>Choose the size that matches your mattress using the options above. Final offered sizes and pocket depth will be published from the production sample before launch.</p></div>
+          <div class="wm-accordion-content"><p>Measure how deep your mattress is before you order, pillow top included, and check it against the size you are choosing. The usual reason a topper slides is corner straps instead of a skirt that grips all four sides. If it does not sit right on your bed, send it back; we would rather have the return than the one-star review.</p></div>
         </details>
         <details>
           <summary>Shipping & returns <span aria-hidden="true">+</span></summary>
@@ -178,6 +171,7 @@
           <div class="wm-voice-card"><strong>The last topper went flat.</strong><span>It looked thick out of the package, then packed down until you could barely tell it was there.</span></div>
           <div class="wm-voice-card"><strong>You are tired of buying the feeling of a solution.</strong><span>This time, the page should show you what is actually inside before asking you to buy.</span></div>
         </div>
+        <p class="wm-release-line">None of that was your fault. You were buying thickness, because thickness is the only thing anyone ever showed you.</p>
       </div>
     </div>
   </section>
@@ -197,9 +191,36 @@
         <p>{{ section.settings.mechanism_body }}</p>
         <div class="wm-belief-points">
           <div class="wm-belief-point"><strong>Thickness tells you how tall it looks.</strong><span>With fiber fill, part of that initial height is air. Air compresses. The amount of material left behind is what matters after the first nights.</span></div>
-          <div class="wm-belief-point"><strong>Weight tells you how much material is actually there.</strong><span>Fill weight is not a standard number shoppers are guaranteed to see on a topper label. That is why we want the scale on camera.</span></div>
-          <div class="wm-belief-point"><strong>Stitching decides whether the filling can move away from you.</strong><span>If fill can migrate across one large space, repeated pressure can push it away from the place that carries your body. Closed compartments are meant to limit that travel.</span></div>
+          <div class="wm-belief-point"><strong>Weight tells you how much material is actually there.</strong><span>Fill weight is not a number anyone is required to print on a topper label in the United States. Fiber content is regulated. The amount of it is not. So the number that decides whether the product survives is the one number nobody has to show you — which is exactly why nobody does.</span></div>
+          <div class="wm-belief-point"><strong>Stitching decides whether the filling can move away from you.</strong><span>Filling that can move, moves. In one open pocket your body pushes it sideways every time you turn over. Within weeks it is heaped at the edges and thin where your hip sits. That is the ridge down the middle people describe, and you can check it with your hand on any topper.</span></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wm-section wm-changes" id="proof-2b">
+    <div class="wm-shell">
+      <div class="wm-changes__heading">
+        <p class="wm-kicker">02b — What changes, and what doesn't</p>
+        <h2>What you actually get from a comfort layer.</h2>
+      </div>
+      <div class="wm-changes__grid">
+        <article class="wm-change-card wm-change-card--primary">
+          <strong>What changes</strong>
+          <ul>
+            <li>A bed that feels too firm stops pressing back at your hips and shoulders.</li>
+            <li>You stop feeling as much of the mattress structure through the sheet — the springs, the edge, the hard seam you have been sleeping around.</li>
+            <li>The layer is fiber rather than foam, so it does not hold heat the way foam does.</li>
+          </ul>
+        </article>
+        <article class="wm-change-card">
+          <strong>What does not change</strong>
+          <ul>
+            <li>The structure underneath. If the mattress is broken, it is still broken in the morning.</li>
+            <li>A hollow already formed in the core stays there. Anyone who tells you otherwise is selling you something.</li>
+            <li>We claim nothing about pain, sleep quality or health. This is a comfort layer, and we would rather say that than stretch it.</li>
+          </ul>
+        </article>
       </div>
     </div>
   </section>
@@ -207,7 +228,7 @@
   <section class="wm-section wm-proof-lab" id="proof-3">
     <div class="wm-shell">
       <div class="wm-proof-lab__intro">
-        <p class="wm-kicker">03 — Proof, not adjectives</p>
+        <p class="wm-kicker">03 — How to judge any topper, including this one</p>
         <h2>{{ section.settings.proof_heading }}</h2>
         <p>{{ section.settings.proof_body }}</p>
       </div>
@@ -215,32 +236,32 @@
         <article class="wm-proof-card">
           <div class="wm-proof-card__media">
             {% if section.settings.scale_image != blank %}
-              {{ section.settings.scale_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'CloudLoft production sample on a scale' }}
+              {{ section.settings.scale_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'Mattress topper on a scale' }}
             {% else %}
               {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
             {% endif %}
           </div>
-          <div class="wm-proof-card__copy"><span>Test 01</span><h3>Put it on a scale.</h3><p>Publish the measured production-sample weight with the number visible in the same shot.</p><span class="wm-proof-status">PRODUCTION PROOF TO BE FILMED</span></div>
+          <div class="wm-proof-card__copy"><span>Test 01</span><h3>Put it on a scale.</h3><p>Use a bathroom scale, out of the package, with nothing else on it. You are weighing material, because air weighs nothing. Whatever that number is, it is the part that survives the first night.</p></div>
         </article>
         <article class="wm-proof-card">
           <div class="wm-proof-card__media">
             {% if section.settings.cut_image != blank %}
-              {{ section.settings.cut_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'CloudLoft cut-through construction proof' }}
+              {{ section.settings.cut_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'Quilted mattress topper construction' }}
             {% else %}
               {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
             {% endif %}
           </div>
-          <div class="wm-proof-card__copy"><span>Test 02</span><h3>Cut it open.</h3><p>Show the internal compartments and the actual filling. No render. No hidden cut.</p><span class="wm-proof-status">PRODUCTION PROOF TO BE FILMED</span></div>
+          <div class="wm-proof-card__copy"><span>Test 02</span><h3>Push your hand into it.</h3><p>Press into the middle of a quilted square, then into a seam, and feel where the filling stops. Closed compartments hold the fill over the part of the bed that carries you. One large open pocket lets it travel, which is how a topper ends up thick at the edges and thin under your hip.</p></div>
         </article>
         <article class="wm-proof-card">
           <div class="wm-proof-card__media">
             {% if section.settings.measure_image != blank %}
-              {{ section.settings.measure_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'CloudLoft measured on camera' }}
+              {{ section.settings.measure_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'Mattress topper beside a tape measure' }}
             {% else %}
               {{ 'product-3' | placeholder_svg_tag: 'placeholder-svg' }}
             {% endif %}
           </div>
-          <div class="wm-proof-card__copy"><span>Test 03</span><h3>Put the tape on it.</h3><p>Show the real dimensions and fit from the finished production sample instead of asking the product photo to do the proving.</p><span class="wm-proof-status">PRODUCTION PROOF TO BE FILMED</span></div>
+          <div class="wm-proof-card__copy"><span>Test 03</span><h3>Measure it after a month.</h3><p>Not out of the box; out of the box everything is tall. Put a tape on it after thirty nights in the same spot. That is the only measurement that describes what you actually bought.</p></div>
         </article>
       </div>
     </div>
@@ -248,32 +269,24 @@
 
   <section class="wm-spec-strip">
     <div class="wm-shell wm-spec-grid wm-spec-grid--research">
-      <div><strong>WEIGHED</strong><span>The number on camera</span></div>
-      <div><strong>CUT OPEN</strong><span>The construction visible</span></div>
-      <div><strong>MEASURED</strong><span>The finished sample, not a render</span></div>
+      <div><strong>WEIGH IT</strong><span>Material, not air</span></div>
+      <div><strong>FEEL IT</strong><span>Find where the filling stops</span></div>
+      <div><strong>MEASURE IT LATER</strong><span>Judge it after use</span></div>
     </div>
   </section>
 
   <section class="wm-guarantee" id="proof-4">
     <div class="wm-shell wm-guarantee__inner">
       <div>
-        <p class="wm-kicker">04 — A guarantee with a number in it</p>
+        <p class="wm-kicker">04 — A guarantee you can check yourself.</p>
         <h2>{{ section.settings.guarantee_heading }}</h2>
         <p>{{ section.settings.guarantee_body }}</p>
-        <div class="wm-guarantee__threshold">
-          <small>90-night flattening criterion</small>
-          {% if section.settings.guarantee_threshold != blank %}
-            <strong>{{ section.settings.guarantee_threshold }}</strong>
-          {% else %}
-            <strong>Final numeric threshold will be published here before launch.</strong>
-          {% endif %}
-        </div>
         {% if shop.refund_policy %}<a class="wm-secondary-cta" href="{{ shop.refund_policy.url }}">VIEW CURRENT RETURN POLICY</a>{% endif %}
       </div>
       <div class="wm-guarantee__checks" role="list">
-        <div role="listitem"><span>✓</span> 90-night flattening coverage planned for launch</div>
-        <div role="listitem"><span>✓</span> Numeric qualifying criterion published on the page</div>
-        <div role="listitem"><span>✓</span> Free return shipping is the launch-policy requirement</div>
+        <div role="listitem"><span>✓</span> If it goes flat where you sleep, that is the test.</div>
+        <div role="listitem"><span>✓</span> Send a photo. No measurement to prove.</div>
+        <div role="listitem"><span>✓</span> No clause about whether you rotated it enough.</div>
       </div>
     </div>
   </section>
@@ -301,6 +314,24 @@
     </div>
   </section>
 
+  <section class="wm-section wm-research-block">
+    <div class="wm-shell">
+      <div class="wm-research-block__intro">
+        <p class="wm-kicker">From the research</p>
+        <h2>What people complain about after buying other toppers.</h2>
+        <p class="wm-research-block__disclaimer">These are not Nubrae reviews. CloudLoft has not shipped, so it has no customers and no ratings, and we are not going to invent any. These are real, unedited public reviews of OTHER mattress toppers, collected during our research. Spelling is theirs.</p>
+      </div>
+      <div class="wm-research-block__grid">
+        <blockquote class="wm-research-quote"><p>“I'm considering a mattress topper because I can't afford another mattress!”</p><cite>Mumsnet forum</cite></blockquote>
+        <blockquote class="wm-research-quote"><p>“Don't waste your time. It's fluffy, but packs down to nothing once you lay on it.”</p><cite>ProductReview — Muscle Mat — one-star review</cite></blockquote>
+        <blockquote class="wm-research-quote"><p>“The picture is deceiving as to the 'fluffy-ness' of the pad.”</p><cite>Walmart — U by Bedsure — two-star review</cite></blockquote>
+        <blockquote class="wm-research-quote"><p>“While it came with straps attached at each corner, they won't stay put.”</p><cite>Walmart — Extra Firm topper — two-star review</cite></blockquote>
+        <blockquote class="wm-research-quote"><p>“The topper doesn't hold its shape It is depressed on both sides where we sleep”</p><cite>ProductReview — Super Sleeper Pro — two-star review</cite></blockquote>
+        <blockquote class="wm-research-quote"><p>“So in other words, in the small print, the mattress is guaranteed to dip, will continue to dip and they accept this.”</p><cite>Mumsnet forum</cite></blockquote>
+      </div>
+    </div>
+  </section>
+
   <section class="wm-section wm-faq">
     <div class="wm-shell wm-faq__layout">
       <div class="wm-section-heading wm-section-heading--left">
@@ -309,14 +340,16 @@
         <p>Straight answers. The product should not need vague promises.</p>
       </div>
       <div class="wm-faq__list">
-        <details open><summary>What does CloudLoft actually do?<span>+</span></summary><p>It adds a quilted fiber layer on top of the mattress you already own. The supported use is adding cushioning to a bed that feels too firm. It does not repair a broken or structurally sagging mattress.</p></details>
-        <details><summary>Why are you talking about weight instead of thickness?<span>+</span></summary><p>With fiber-filled toppers, visible height includes air that compresses under use. Weight gives us a way to show how much material is actually present. The production sample will be weighed on camera before launch.</p></details>
-        <details><summary>Why does the quilting matter?<span>+</span></summary><p>Containment matters because filling that can travel can move away from the places that carry the most repeated load. We will show the final internal construction by cutting a production sample open on camera.</p></details>
-        <details><summary>Is this memory foam?<span>+</span></summary><p>No. The launch specification is fiber-filled rather than memory foam. Final fiber composition and care instructions will be published from the production label before sale.</p></details>
-        <details><summary>Can I machine wash it?<span>+</span></summary><p>The research strategy calls for a machine-washable fiber construction, but the exact wash and dry instructions will only be published after the finished SKU and care label are confirmed.</p></details>
-        <details><summary>What happens if it goes flat?<span>+</span></summary><p>The launch offer is built around 90-night flattening coverage with a numeric qualifying threshold. That number will be published on this page before the product is made available for purchase.</p></details>
-        <details><summary>Will this fix the sag in my mattress?<span>+</span></summary><p>No. A topper cannot repair structural sagging underneath. If the mattress is worn out, CloudLoft is a temporary comfort layer while you save for a replacement, not a repair.</p></details>
-        <details><summary>Which sizes are available?<span>+</span></summary><p>The storefront will show only the variants we actually sell. Final dimensions, pocket depth and fit will be published from the production sample.</p></details>
+        <details open><summary>What does CloudLoft actually do?<span>+</span></summary><p>It adds a quilted fiber layer on top of the mattress you already own. The point is cushioning for a bed that feels too firm. It does not repair a broken or structurally sagging mattress.</p></details>
+        <details><summary>Why are you talking about weight instead of thickness?<span>+</span></summary><p>With fiber-filled toppers, visible height includes air that compresses under use. Weight tells you how much material is actually present, and that amount is not something a topper label has to show you.</p></details>
+        <details><summary>Why does the quilting matter?<span>+</span></summary><p>Filling that can travel can move away from the places that carry repeated load. Press into the middle of a quilted area and then into a seam; you can feel where the filling stops.</p></details>
+        <details><summary>Is this memory foam?<span>+</span></summary><p>No. CloudLoft is fiber-filled, not memory foam. It does not hold heat the way foam does.</p></details>
+        <details><summary>Can I machine wash it?<span>+</span></summary><p>Yes. CloudLoft is fiber-filled rather than foam, so it can be machine washed. Follow the care label attached to the topper for the cycle and drying instructions.</p></details>
+        <details><summary>What happens if it goes flat?<span>+</span></summary><p>If it goes flat where you sleep, that is the test. Send a photo. You do not need to prove a hidden measurement or argue about whether you rotated it enough.</p></details>
+        <details><summary>Will this fix the sag in my mattress?<span>+</span></summary><p>No, and we would rather lose the sale than pretend otherwise. A topper sits on the deformation and follows it. If the core is gone, this makes the surface comfortable while you save for the replacement, and that is the honest description of what you are buying.</p></details>
+        <details><summary>Which sizes are available?<span>+</span></summary><p>The size selector above shows the sizes currently offered. Match the size to your mattress width and length, then measure the mattress depth with the pillow top included before you order.</p></details>
+        <details><summary>Will it stay on the bed?<span>+</span></summary><p>Measure how deep your mattress is before you order, pillow top included, and check it against the size you are choosing. The usual reason a topper slides is corner straps instead of a skirt that grips all four sides. If it does not sit right on your bed, send it back; we would rather have the return than the one-star review.</p></details>
+        <details><summary>Why should I believe any of this?<span>+</span></summary><p>Do not. Run the three tests above on this topper and on the one you already own. If the argument on this page is right, you can tell without us.</p></details>
       </div>
     </div>
   </section>
@@ -336,13 +369,13 @@
     {"type":"text","id":"promo_text","label":"Promo bar","default":"For the mattress you're keeping this year."},
     {"type":"text","id":"eyebrow","label":"Product eyebrow","default":"For people who already bought a topper that went flat."},
     {"type":"textarea","id":"subtitle","label":"Product subtitle","default":"CloudLoft is built around two things you can verify before you buy: how much material is actually inside, and whether it stays where it was put."},
-    {"type":"textarea","id":"preprice_note","label":"Pre-price reassurance","default":"Launch requirement: 90-night flattening coverage with a published measurement and free return shipping."},
-    {"type":"text","id":"benefit_1","label":"Benefit 1","default":"Production sample weighed on camera"},
-    {"type":"text","id":"benefit_2","label":"Benefit 2","default":"Internal construction shown by cut-through"},
-    {"type":"text","id":"benefit_3","label":"Fiber fill. Not memory foam."},
-    {"type":"text","id":"benefit_4","label":"Designed to add cushioning to a bed that feels too firm"},
+    {"type":"textarea","id":"preprice_note","label":"Pre-price reassurance","default":"If it goes flat where you sleep, send a photo. The guarantee is written around what you can see, not a hidden measurement."},
+    {"type":"text","id":"benefit_1","label":"Benefit 1","default":"Judge it by weight, not just thickness"},
+    {"type":"text","id":"benefit_2","label":"Benefit 2","default":"Check where the fill stops with your hand"},
+    {"type":"text","id":"benefit_3","label":"Benefit 3","default":"Fiber fill. Not memory foam."},
+    {"type":"text","id":"benefit_4","label":"Benefit 4","default":"Designed to add cushioning to a bed that feels too firm"},
     {"type":"text","id":"cta_label","label":"Add to cart label","default":"ADD TO CART"},
-    {"type":"textarea","id":"shipping_text","label":"Shipping copy","default":"Final launch shipping and return terms will be published before the product is made available for purchase."},
+    {"type":"textarea","id":"shipping_text","label":"Shipping copy","default":"Orders use the shipping method shown at checkout. Return eligibility follows the current store return policy linked below."},
 
     {"type":"header","content":"Proof 1 — Customer problem"},
     {"type":"image_picker","id":"problem_image","label":"Problem section image"},
@@ -354,24 +387,23 @@
     {"type":"text","id":"mechanism_heading","label":"Mechanism heading","default":"A topper is a weight product sold like a thickness product."},
     {"type":"textarea","id":"mechanism_body","label":"Mechanism body","default":"The height you see out of the package includes air. Air compresses. What remains is the material that was actually inside. Then there is a second question: can that material stay under you, or can it migrate away from the place your body loads every night?"},
 
-    {"type":"header","content":"Proof 3 — Physical proof"},
-    {"type":"text","id":"proof_heading","label":"Proof heading","default":"Weigh it. Cut it open. Measure it."},
-    {"type":"textarea","id":"proof_body","label":"Proof body","default":"The production sample should do the selling. The scale, the inside construction and the tape measure will be filmed and published here before launch. Numbers and footage first."},
-    {"type":"image_picker","id":"scale_image","label":"Scale proof image"},
-    {"type":"image_picker","id":"cut_image","label":"Cut-through proof image"},
-    {"type":"image_picker","id":"measure_image","label":"Measurement proof image"},
+    {"type":"header","content":"Proof 3 — Reader tests"},
+    {"type":"text","id":"proof_heading","label":"Proof heading","default":"Three tests. Run them on ours, and on the one you already own."},
+    {"type":"textarea","id":"proof_body","label":"Proof body","default":"We are not asking you to trust an adjective. These are the three things that decide whether a topper is still doing its job in three months. They take about two minutes each, and they work on any brand, including this one."},
+    {"type":"image_picker","id":"scale_image","label":"Scale test image"},
+    {"type":"image_picker","id":"cut_image","label":"Feel test image"},
+    {"type":"image_picker","id":"measure_image","label":"Later measurement image"},
 
     {"type":"header","content":"Proof 4 — Guarantee"},
     {"type":"text","id":"guarantee_heading","label":"Guarantee heading","default":"If it goes flat, the guarantee should not turn into an argument."},
-    {"type":"textarea","id":"guarantee_body","label":"Guarantee body","default":"The launch offer is a 90-night flattening guarantee with an objective measurement written on this page. If the qualifying limit is exceeded, the customer should not have to debate whether the product failed. Free return shipping is part of the launch requirement."},
-    {"type":"text","id":"guarantee_threshold","label":"Numeric guarantee threshold","info":"Leave blank until the final measured threshold is approved."},
+    {"type":"textarea","id":"guarantee_body","label":"Guarantee body","default":"People in our research described bedding warranties as a joke because the company gets to decide whether the product failed: you rotated it wrong, there is a stain, the sag is not deep enough. This one is written the other way around. If it goes flat where you sleep, that is the test. You can see it. Send a photo. No measurement to prove, and no argument about whether you rotated it enough."},
 
     {"type":"header","content":"Proof 5 — Value decision"},
     {"type":"image_picker","id":"value_image","label":"Value section image"},
     {"type":"text","id":"value_heading","label":"Value heading","default":"$199 now. Replace the mattress when you're ready."},
     {"type":"textarea","id":"value_body","label":"Value body","default":"A new Queen mattress is roughly a $1,000 decision. CloudLoft is a $199 decision for the bed you are keeping this year. Not a replacement for a broken mattress. A comfort layer while you save for the replacement."},
 
-    {"type":"text","id":"faq_heading","label":"FAQ heading","default":"What we will say. And what we will not."}
+    {"type":"text","id":"faq_heading","label":"FAQ heading","default":"Straight answers."}
   ],
   "presets": [{"name":"Mattress topper landing"}]
 }
