@@ -1,7 +1,6 @@
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
- * Research strategy version: 2026-09-17.
  *
  * This file may be updated by the Shopify admin theme editor
  * or related systems. Please exercise caution as any changes
@@ -23,15 +22,21 @@
         "benefit_4": "Designed to add cushioning to a bed that feels too firm",
         "cta_label": "ADD TO CART",
         "shipping_text": "Final launch shipping and return terms will be published before the product is made available for purchase.",
+        "problem_image": "shopify://shop_images/ChatGPT_Image_Sep_17_2026_12_11_54_PM.png",
         "problem_heading": "You rotate it. The dip comes back.",
         "problem_body": "Maybe it is a hollow where you sleep. Maybe the bed feels too firm. Maybe you already bought a topper that looked thick for a week and then went flat. This page is for the person who is keeping the mattress this year and wants to see proof before buying another topper.",
+        "mechanism_image": "shopify://shop_images/ChatGPT_Image_Sep_17_2026_12_14_47_PM.png",
         "mechanism_heading": "A topper is a weight product sold like a thickness product.",
         "mechanism_body": "The height you see out of the package includes air. Air compresses. What remains is the material that was actually inside. Then there is a second question: can that material stay under you, or can it migrate away from the place your body loads every night?",
         "proof_heading": "Weigh it. Cut it open. Measure it.",
         "proof_body": "The production sample should do the selling. The scale, the inside construction and the tape measure will be filmed and published here before launch. Numbers and footage first.",
+        "scale_image": "shopify://shop_images/ChatGPT_Image_Sep_17_2026_12_18_22_PM.png",
+        "cut_image": "shopify://shop_images/ChatGPT_Image_Sep_17_2026_12_18_57_PM.png",
+        "measure_image": "shopify://shop_images/ChatGPT_Image_Sep_17_2026_12_19_31_PM.png",
         "guarantee_heading": "If it goes flat, the guarantee should not turn into an argument.",
         "guarantee_body": "The launch offer is a 90-night flattening guarantee with an objective measurement written on this page. If the qualifying limit is exceeded, the customer should not have to debate whether the product failed. Free return shipping is part of the launch requirement.",
         "guarantee_threshold": "",
+        "value_image": "shopify://shop_images/ChatGPT_Image_Sep_17_2026_12_21_37_PM.png",
         "value_heading": "$199 now. Replace the mattress when you're ready.",
         "value_body": "A new Queen mattress is roughly a $1,000 decision. CloudLoft is a $199 decision for the bed you are keeping this year. Not a replacement for a broken mattress. A comfort layer while you save for the replacement.",
         "faq_heading": "What we will say. And what we will not."
