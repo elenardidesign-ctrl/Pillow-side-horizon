@@ -1,0 +1,327 @@
+{{ 'wm-product-landing.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'wm-product-landing.js' | asset_url }}" defer="defer"></script>
+
+{% liquid
+  assign wm_product = product
+  assign current_variant = wm_product.selected_or_first_available_variant
+  assign form_id = 'WMProductForm-' | append: section.id
+%}
+
+<section class="wm-page" data-wm-product data-section-id="{{ section.id }}">
+  {% if section.settings.promo_text != blank %}
+    <div class="wm-promo" role="status">
+      <span>{{ section.settings.promo_text }}</span>
+    </div>
+  {% endif %}
+
+  <div class="wm-shell wm-buybox-shell">
+    <div class="wm-gallery" data-wm-gallery>
+      <div class="wm-gallery__stage">
+        {% if wm_product.media.size > 0 %}
+          {% for media in wm_product.media %}
+            <div class="wm-gallery__item{% if forloop.first %} is-active{% endif %}" data-media-id="{{ media.id }}" {% unless forloop.first %}hidden{% endunless %}>
+              {% case media.media_type %}
+                {% when 'image' %}
+                  {{ media | image_url: width: 1600 | image_tag: loading: 'eager', widths: '480, 720, 960, 1200, 1600', sizes: '(min-width: 990px) 58vw, 100vw', class: 'wm-gallery__media', alt: media.alt | default: wm_product.title }}
+                {% when 'video' %}
+                  {{ media | video_tag: controls: true, autoplay: false, loop: false, muted: false, class: 'wm-gallery__media wm-gallery__video' }}
+                {% when 'external_video' %}
+                  {{ media | external_video_tag: class: 'wm-gallery__media wm-gallery__video' }}
+                {% else %}
+                  {{ media | media_tag: class: 'wm-gallery__media' }}
+              {% endcase %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="wm-gallery__item is-active wm-gallery__placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'wm-gallery__media placeholder-svg' }}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if wm_product.media.size > 1 %}
+        <div class="wm-gallery__thumbs" aria-label="Product media">
+          {% for media in wm_product.media limit: 8 %}
+            <button type="button" class="wm-gallery__thumb{% if forloop.first %} is-active{% endif %}" data-wm-thumb data-media-id="{{ media.id }}" aria-label="View media {{ forloop.index }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+              {% if media.preview_image %}
+                {{ media.preview_image | image_url: width: 220 | image_tag: loading: 'lazy', class: 'wm-gallery__thumb-image', alt: media.alt | default: wm_product.title }}
+              {% endif %}
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <aside class="wm-buybox" aria-label="Purchase {{ wm_product.title | escape }}">
+      {% if section.settings.eyebrow != blank %}
+        <p class="wm-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+
+      <h1 class="wm-product-title">{{ wm_product.title }}</h1>
+
+      {% if section.settings.subtitle != blank %}
+        <p class="wm-subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+
+      <div class="wm-price" data-wm-price-wrap>
+        <span class="wm-price__current" data-wm-price>{{ current_variant.price | money }}</span>
+        <span class="wm-price__compare{% unless current_variant.compare_at_price > current_variant.price %} is-hidden{% endunless %}" data-wm-compare-price>
+          {% if current_variant.compare_at_price > current_variant.price %}{{ current_variant.compare_at_price | money }}{% endif %}
+        </span>
+        <span class="wm-price__save{% unless current_variant.compare_at_price > current_variant.price %} is-hidden{% endunless %}" data-wm-save>
+          {% if current_variant.compare_at_price > current_variant.price %}
+            Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}
+          {% endif %}
+        </span>
+      </div>
+
+      <ul class="wm-benefits" role="list">
+        <li><span aria-hidden="true">✓</span> {{ section.settings.benefit_1 }}</li>
+        <li><span aria-hidden="true">✓</span> {{ section.settings.benefit_2 }}</li>
+        <li><span aria-hidden="true">✓</span> {{ section.settings.benefit_3 }}</li>
+        <li><span aria-hidden="true">✓</span> {{ section.settings.benefit_4 }}</li>
+      </ul>
+
+      {% form 'product', wm_product, id: form_id, class: 'wm-form' %}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-wm-variant-id>
+
+        {% unless wm_product.has_only_default_variant %}
+          <div class="wm-options" data-wm-options>
+            {% for option in wm_product.options_with_values %}
+              <fieldset class="wm-option" data-option-index="{{ forloop.index0 }}">
+                <legend>{{ option.name }}</legend>
+                <div class="wm-option__values">
+                  {% for value in option.values %}
+                    <button
+                      type="button"
+                      class="wm-option__button{% if option.selected_value == value %} is-selected{% endif %}"
+                      data-wm-option
+                      data-option-index="{{ forloop.parentloop.index0 }}"
+                      data-option-value="{{ value | escape }}"
+                      aria-pressed="{% if option.selected_value == value %}true{% else %}false{% endif %}"
+                    >{{ value }}</button>
+                  {% endfor %}
+                </div>
+              </fieldset>
+            {% endfor %}
+          </div>
+        {% endunless %}
+
+        <div class="wm-purchase-row">
+          <div class="wm-qty" aria-label="Quantity selector">
+            <button type="button" data-wm-qty-minus aria-label="Decrease quantity">−</button>
+            <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="Quantity" data-wm-qty-input>
+            <button type="button" data-wm-qty-plus aria-label="Increase quantity">+</button>
+          </div>
+
+          <button type="submit" name="add" class="wm-atc" data-wm-atc {% unless current_variant.available %}disabled{% endunless %}>
+            <span data-wm-atc-text>{% if current_variant.available %}{{ section.settings.cta_label }}{% else %}Sold out{% endif %}</span>
+          </button>
+        </div>
+      {% endform %}
+
+      <p class="wm-stock{% unless current_variant.available %} is-sold-out{% endunless %}" data-wm-stock>
+        <span class="wm-stock__dot" aria-hidden="true"></span>
+        {% if current_variant.available %}In stock and ready to order{% else %}Currently unavailable{% endif %}
+      </p>
+
+      <div class="wm-trust-row" role="list" aria-label="Purchase assurances">
+        <div role="listitem"><strong>Secure checkout</strong><span>Protected payment</span></div>
+        <div role="listitem"><strong>Tracked shipping</strong><span>Order updates</span></div>
+        <div role="listitem"><strong>Easy returns</strong><span>Policy-backed</span></div>
+      </div>
+
+      <div class="wm-accordions">
+        <details open>
+          <summary>Product details <span aria-hidden="true">+</span></summary>
+          <div class="wm-accordion-content">
+            {% if wm_product.description != blank %}
+              {{ wm_product.description }}
+            {% else %}
+              <p>A thick, quilted pillow-top mattress pad designed to add a plush comfort layer to your existing bed.</p>
+            {% endif %}
+          </div>
+        </details>
+        <details>
+          <summary>Sizing & fit <span aria-hidden="true">+</span></summary>
+          <div class="wm-accordion-content"><p>Choose the size that matches your mattress using the options above. Available sizing depends on the product variants currently offered.</p></div>
+        </details>
+        <details>
+          <summary>Shipping & returns <span aria-hidden="true">+</span></summary>
+          <div class="wm-accordion-content"><p>{{ section.settings.shipping_text }}</p>{% if shop.refund_policy %}<p><a href="{{ shop.refund_policy.url }}">View full return policy</a></p>{% endif %}</div>
+        </details>
+      </div>
+
+      <script type="application/json" data-wm-variants>{{ wm_product.variants | json }}</script>
+      <script type="application/json" data-wm-product-media>{{ wm_product.media | json }}</script>
+      <span data-wm-currency hidden>{{ cart.currency.iso_code | default: shop.currency }}</span>
+    </aside>
+  </div>
+
+  <section class="wm-section wm-section--action">
+    <div class="wm-shell">
+      <div class="wm-section-heading">
+        <p class="wm-kicker">See it in action</p>
+        <h2>{{ section.settings.action_heading }}</h2>
+        <p>{{ section.settings.action_body }}</p>
+      </div>
+      <div class="wm-action-grid">
+        {% for media in wm_product.media limit: 3 %}
+          <div class="wm-action-card">
+            {% case media.media_type %}
+              {% when 'video' %}
+                {{ media | video_tag: controls: true, autoplay: false, loop: true, muted: true, class: 'wm-action-card__media' }}
+              {% when 'external_video' %}
+                {{ media | external_video_tag: class: 'wm-action-card__media' }}
+              {% else %}
+                {{ media.preview_image | image_url: width: 900 | image_tag: loading: 'lazy', class: 'wm-action-card__media', alt: media.alt | default: wm_product.title }}
+            {% endcase %}
+          </div>
+        {% else %}
+          {% for i in (1..3) %}
+            <div class="wm-action-card wm-action-card--placeholder">{{ 'lifestyle-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}</div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="wm-story">
+    <div class="wm-story__media">
+      {% assign story_media = wm_product.media[1] | default: wm_product.featured_media %}
+      {% if story_media.preview_image %}
+        {{ story_media.preview_image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1400', class: 'wm-story__image', alt: story_media.alt | default: wm_product.title }}
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'wm-story__image placeholder-svg' }}
+      {% endif %}
+    </div>
+    <div class="wm-story__copy">
+      <p class="wm-kicker">A simpler bedroom upgrade</p>
+      <h2>{{ section.settings.story_heading }}</h2>
+      <div class="wm-richtext">{{ section.settings.story_body }}</div>
+    </div>
+  </section>
+
+  <div class="wm-marquee" aria-label="Product highlights">
+    <div class="wm-marquee__track">
+      {% for i in (1..2) %}
+        <span>PLUSH COMFORT</span><i>•</i><span>QUILTED TOP</span><i>•</i><span>MICROFIBER FILL</span><i>•</i><span>MULTIPLE SIZES</span><i>•</i>
+      {% endfor %}
+    </div>
+  </div>
+
+  <section class="wm-section wm-features">
+    <div class="wm-shell">
+      <div class="wm-section-heading wm-section-heading--left">
+        <p class="wm-kicker">Why this construction</p>
+        <h2>{{ section.settings.features_heading }}</h2>
+        <p>{{ section.settings.features_body }}</p>
+      </div>
+      <div class="wm-feature-grid">
+        <article class="wm-feature-card"><span>01</span><h3>Plush fill layer</h3><p>Microfiber and polyester fill adds a noticeably softer layer between you and your existing mattress.</p></article>
+        <article class="wm-feature-card"><span>02</span><h3>Quilted structure</h3><p>Stitched channels help distribute the fill across the sleep surface instead of leaving one flat sheet of padding.</p></article>
+        <article class="wm-feature-card"><span>03</span><h3>Full-bed coverage</h3><p>Designed as a mattress pad/topper, with size options that match common bed dimensions.</p></article>
+        <article class="wm-feature-card"><span>04</span><h3>Easy comfort upgrade</h3><p>Add a pillow-top feel without replacing the mattress underneath.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="wm-spec-strip">
+    <div class="wm-shell wm-spec-grid">
+      <div><strong>MICROFIBER</strong><span>Soft surface material</span></div>
+      <div><strong>PILLOW TOP</strong><span>Plush quilted construction</span></div>
+      <div><strong>MULTI-SIZE</strong><span>Choose your bed size</span></div>
+    </div>
+  </section>
+
+  <section class="wm-section wm-comparison">
+    <div class="wm-shell">
+      <div class="wm-section-heading">
+        <p class="wm-kicker">At a glance</p>
+        <h2>{{ section.settings.comparison_heading }}</h2>
+        <p>A practical comparison of a plush pillow-top pad versus a basic thin mattress protector.</p>
+      </div>
+      <div class="wm-table-wrap">
+        <table class="wm-table">
+          <thead><tr><th>Feature</th><th>{{ wm_product.title | default: 'Pillow-Top Pad' }}</th><th>Basic thin protector</th></tr></thead>
+          <tbody>
+            <tr><td>Primary purpose</td><td>✓ Added cushioning</td><td>Mattress surface protection</td></tr>
+            <tr><td>Surface construction</td><td>✓ Quilted pillow-top</td><td>Usually low-profile</td></tr>
+            <tr><td>Fill layer</td><td>✓ Microfiber / polyester fill</td><td>Minimal or none</td></tr>
+            <tr><td>Comfort upgrade</td><td>✓ Designed to add softness</td><td>Not the main purpose</td></tr>
+            <tr><td>Bed-size options</td><td>✓ Variant dependent</td><td>Variant dependent</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="wm-section wm-faq">
+    <div class="wm-shell wm-faq__layout">
+      <div class="wm-section-heading wm-section-heading--left">
+        <p class="wm-kicker">Help before you order</p>
+        <h2>{{ section.settings.faq_heading }}</h2>
+        <p>Everything you should know before choosing a size.</p>
+      </div>
+      <div class="wm-faq__list">
+        <details open><summary>What exactly is this product?<span>+</span></summary><p>It is a thick quilted mattress pad/topper with microfiber and polyester fill, designed to sit on top of your existing mattress and add a softer pillow-top feel.</p></details>
+        <details><summary>Which sizes are available?<span>+</span></summary><p>The available sizes are the variants shown in the selector above. The supplier listing identifies King, Queen and Full-size options; your storefront will only show the variants you choose to sell.</p></details>
+        <details><summary>Does it replace my mattress?<span>+</span></summary><p>No. It is an added comfort layer for an existing mattress, not a replacement mattress.</p></details>
+        <details><summary>What is the fill made from?<span>+</span></summary><p>The supplier listing describes a microfiber/polyester-filled pillow-top mattress pad.</p></details>
+        <details><summary>How should I care for it?<span>+</span></summary><p>Follow the care label supplied with the finished product. We do not publish wash or dry settings until they are confirmed for the exact SKU being sold.</p></details>
+        <details><summary>What about shipping and returns?<span>+</span></summary><p>{{ section.settings.shipping_text }} {% if shop.refund_policy %}<a href="{{ shop.refund_policy.url }}">See the full return policy.</a>{% endif %}</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="wm-guarantee">
+    <div class="wm-shell wm-guarantee__inner">
+      <div>
+        <p class="wm-kicker">Shop with confidence</p>
+        <h2>{{ section.settings.guarantee_heading }}</h2>
+        <p>{{ section.settings.guarantee_body }}</p>
+        {% if shop.refund_policy %}<a class="wm-secondary-cta" href="{{ shop.refund_policy.url }}">VIEW RETURN POLICY</a>{% endif %}
+      </div>
+      <div class="wm-guarantee__checks" role="list">
+        <div role="listitem"><span>✓</span> Secure checkout</div>
+        <div role="listitem"><span>✓</span> Tracked order updates</div>
+        <div role="listitem"><span>✓</span> Clear return terms</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wm-mobile-bar" data-wm-mobile-bar>
+    <div><strong>{{ current_variant.price | money }}</strong><small>{{ wm_product.title | truncate: 34 }}</small></div>
+    <button type="button" data-wm-mobile-atc {% unless current_variant.available %}disabled{% endunless %}>{% if current_variant.available %}{{ section.settings.cta_label }}{% else %}Sold out{% endif %}</button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Mattress topper landing",
+  "tag": "section",
+  "class": "section-wm-product-landing",
+  "settings": [
+    {"type":"text","id":"promo_text","label":"Promo bar","default":"A more comfortable bed starts with one layer."},
+    {"type":"text","id":"eyebrow","label":"Product eyebrow","default":"Plush pillow-top mattress pad"},
+    {"type":"textarea","id":"subtitle","label":"Product subtitle","default":"A thick, quilted comfort layer designed to make your existing mattress feel softer and more inviting."},
+    {"type":"text","id":"benefit_1","label":"Benefit 1","default":"Plush microfiber / polyester fill"},
+    {"type":"text","id":"benefit_2","label":"Benefit 2","default":"Quilted pillow-top construction"},
+    {"type":"text","id":"benefit_3","label":"Benefit 3","default":"Made for home and hotel-style bedding"},
+    {"type":"text","id":"benefit_4","label":"Benefit 4","default":"Multiple mattress sizes available"},
+    {"type":"text","id":"cta_label","label":"Add to cart label","default":"ADD TO CART"},
+    {"type":"textarea","id":"shipping_text","label":"Shipping copy","default":"Shipping timing and tracking details are shown at checkout and in your order confirmation."},
+    {"type":"text","id":"action_heading","label":"Action section heading","default":"See the comfort from every angle"},
+    {"type":"textarea","id":"action_body","label":"Action section body","default":"Use real product photos and video here to show the loft, quilting and how the topper sits on a finished bed."},
+    {"type":"text","id":"story_heading","label":"Story heading","default":"Make your mattress feel noticeably plusher"},
+    {"type":"richtext","id":"story_body","label":"Story body","default":"<p>You do not always need a new mattress to change the feel of your bed. A thick, quilted pillow-top layer adds softness on top of the mattress you already own.</p><p>The result is a more inviting sleep surface with the visual finish of a hotel-style bed.</p>"},
+    {"type":"text","id":"features_heading","label":"Features heading","default":"What makes this topper different"},
+    {"type":"textarea","id":"features_body","label":"Features body","default":"A simple construction story: plush fill, quilted structure and an easy way to add softness to the bed you already have."},
+    {"type":"text","id":"comparison_heading","label":"Comparison heading","default":"More than a thin mattress cover"},
+    {"type":"text","id":"faq_heading","label":"FAQ heading","default":"Frequently asked questions"},
+    {"type":"text","id":"guarantee_heading","label":"Guarantee heading","default":"Know the terms before you buy"},
+    {"type":"textarea","id":"guarantee_body","label":"Guarantee body","default":"Your purchase is covered by the store policies shown at checkout. Review the return terms before ordering so there are no surprises."}
+  ],
+  "presets": [{"name":"Mattress topper landing"}]
+}
+{% endschema %}
