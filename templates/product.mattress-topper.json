@@ -1,5 +1,11 @@
 {
   "sections": {
+    "wm_header": {
+      "type": "wm-minimal-header",
+      "settings": {
+        "menu": "main-menu"
+      }
+    },
     "wm_product_landing": {
       "type": "wm-product-landing",
       "settings": {
@@ -23,9 +29,18 @@
         "guarantee_heading": "Know the terms before you buy",
         "guarantee_body": "Your purchase is covered by the store policies shown at checkout. Review the return terms before ordering so there are no surprises."
       }
+    },
+    "wm_footer": {
+      "type": "wm-minimal-footer",
+      "settings": {
+        "tagline": "Comfort-focused bedding for a softer, more inviting sleep space.",
+        "menu": "main-menu"
+      }
     }
   },
   "order": [
-    "wm_product_landing"
+    "wm_header",
+    "wm_product_landing",
+    "wm_footer"
   ]
 }
