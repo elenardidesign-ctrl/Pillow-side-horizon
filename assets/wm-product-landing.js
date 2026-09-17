@@ -1,4 +1,70 @@
 (() => {
+  const ensureObjectionProof = (root) => {
+    const accordions = root?.querySelector('.wm-accordions');
+    if (!accordions || root.querySelector('.wm-objection-proof')) return;
+
+    const card = document.createElement('aside');
+    card.className = 'wm-objection-proof';
+    card.setAttribute('aria-label', 'Customer research insight');
+    card.innerHTML = `
+      <div class="wm-objection-proof__mark" aria-hidden="true">“</div>
+      <div class="wm-objection-proof__content">
+        <div class="wm-objection-proof__meta">
+          <strong>What buyers told us</strong>
+          <span>FROM CUSTOMER RESEARCH</span>
+        </div>
+        <p>“I’m considering a mattress topper because I can’t afford another mattress.”</p>
+        <small>That is the decision CloudLoft is built around: make the bed you are keeping more comfortable while you save for the replacement.</small>
+      </div>
+    `;
+    accordions.insertAdjacentElement('afterend', card);
+  };
+
+  const enhanceCartDrawer = () => {
+    const drawer = document.querySelector('#cart-drawer');
+    if (!drawer) return;
+
+    const header = drawer.querySelector('.theme-drawer__header');
+    if (header && !drawer.querySelector('.wm-cart-trust-strip')) {
+      const strip = document.createElement('div');
+      strip.className = 'wm-cart-trust-strip';
+      strip.innerHTML = `
+        <span class="wm-cart-trust-strip__spark" aria-hidden="true">✦</span>
+        <span>Secure checkout · Tracked shipping</span>
+      `;
+      header.insertAdjacentElement('afterend', strip);
+    }
+
+    const badge = drawer.querySelector('.theme-drawer__badge');
+    const count = Number.parseInt(badge?.textContent?.trim() || '0', 10) || 0;
+    const totalLabel = drawer.querySelector('.cart-totals__total-label');
+    if (totalLabel && count > 0) totalLabel.textContent = `Total: ${count} ${count === 1 ? 'Item' : 'Items'}`;
+
+    const checkout = drawer.querySelector('.cart__checkout-button');
+    if (checkout) {
+      const label = checkout.querySelector('.button-text');
+      if (label) label.textContent = 'SECURE CHECKOUT';
+      if (!checkout.querySelector('.wm-cart-lock')) {
+        const lock = document.createElement('span');
+        lock.className = 'wm-cart-lock';
+        lock.setAttribute('aria-hidden', 'true');
+        lock.innerHTML = '<svg viewBox="0 0 24 24" focusable="false"><path d="M7 10V8a5 5 0 0 1 10 0v2m-9 0h8a2 2 0 0 1 2 2v7H6v-7a2 2 0 0 1 2-2Zm1-2v2h6V8a3 3 0 0 0-6 0Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        checkout.prepend(lock);
+      }
+    }
+
+    const ctas = drawer.querySelector('.cart__ctas');
+    if (ctas && !drawer.querySelector('.wm-cart-assurance')) {
+      const assurance = document.createElement('div');
+      assurance.className = 'wm-cart-assurance';
+      assurance.innerHTML = `
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5c0 4.7-2.8 8-7 10-4.2-2-7-5.3-7-10V6l7-3Z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Protected payment · Clear return terms</span>
+      `;
+      ctas.insertAdjacentElement('afterend', assurance);
+    }
+  };
+
   const init = (root) => {
     if (!root || root.dataset.wmInitialized === 'true') return;
     root.dataset.wmInitialized = 'true';
@@ -18,6 +84,8 @@
     const mobileBar = root.querySelector('[data-wm-mobile-bar]');
     const mobileButton = root.querySelector('[data-wm-mobile-atc]');
     const form = root.querySelector('.wm-form');
+
+    ensureObjectionProof(root);
 
     // The custom landing originally used a plain Shopify product form. That can
     // add an item, but it bypasses Horizon's native AJAX cart pipeline, so the
@@ -171,7 +239,26 @@
   };
 
   const initAll = (scope = document) => scope.querySelectorAll('[data-wm-product]').forEach(init);
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => initAll());
-  else initAll();
-  document.addEventListener('shopify:section:load', event => initAll(event.target));
+  const boot = () => {
+    initAll();
+    enhanceCartDrawer();
+
+    let scheduled = false;
+    const observer = new MutationObserver(() => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(() => {
+        scheduled = false;
+        enhanceCartDrawer();
+      });
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+  document.addEventListener('shopify:section:load', event => {
+    initAll(event.target);
+    enhanceCartDrawer();
+  });
 })();
