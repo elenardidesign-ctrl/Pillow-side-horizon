@@ -1,0 +1,62 @@
+<footer class="wm-local-footer">
+  <div class="wm-local-footer__inner">
+    <div class="wm-local-footer__brand">
+      <a href="{{ routes.root_url }}">{{ shop.name }}</a>
+      <p>{{ section.settings.tagline }}</p>
+    </div>
+
+    <div class="wm-local-footer__column">
+      <h3>Menu</h3>
+      {% if section.settings.menu != blank %}
+        {% for link in section.settings.menu.links limit: 6 %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="wm-local-footer__column">
+      <h3>Support</h3>
+      {% if section.settings.support_menu != blank %}
+        {% for link in section.settings.support_menu.links limit: 6 %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+      {% else %}
+        {% if shop.shipping_policy %}<a href="{{ shop.shipping_policy.url }}">Shipping</a>{% endif %}
+        {% if shop.refund_policy %}<a href="{{ shop.refund_policy.url }}">Returns</a>{% endif %}
+        {% if shop.privacy_policy %}<a href="{{ shop.privacy_policy.url }}">Privacy</a>{% endif %}
+      {% endif %}
+    </div>
+  </div>
+  <div class="wm-local-footer__bottom">
+    <div class="wm-local-footer__bottom-inner">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      <span>Secure checkout · Tracked orders</span>
+    </div>
+  </div>
+</footer>
+
+{% style %}
+  html.wm-product-template .shopify-section-group-footer-group,
+  body.wm-product-template .shopify-section-group-footer-group{display:none!important}
+  .wm-local-footer{background:#f7f3ed;color:#171717;border-top:1px solid #ded8d0}
+  .wm-local-footer__inner{width:min(1240px,calc(100% - 40px));margin:0 auto;display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:70px;padding:62px 0 52px}
+  .wm-local-footer__brand a{font-size:26px;font-weight:800;letter-spacing:-.04em;color:inherit;text-decoration:none}
+  .wm-local-footer__brand p{max-width:38ch;color:#6b6862;font-size:13px;line-height:1.6;margin:13px 0 0}
+  .wm-local-footer__column{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+  .wm-local-footer__column h3{font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px}
+  .wm-local-footer__column a{color:#55514c;text-decoration:none;font-size:13px}
+  .wm-local-footer__column a:hover{text-decoration:underline;text-underline-offset:3px}
+  .wm-local-footer__bottom{border-top:1px solid #ded8d0}
+  .wm-local-footer__bottom-inner{width:min(1240px,calc(100% - 40px));margin:0 auto;padding:18px 0;display:flex;justify-content:space-between;gap:20px;color:#77716a;font-size:10px;text-transform:uppercase;letter-spacing:.06em}
+  @media(max-width:749px){.wm-local-footer__inner{width:calc(100% - 28px);grid-template-columns:1fr 1fr;gap:36px 24px;padding:44px 0}.wm-local-footer__brand{grid-column:1/-1}.wm-local-footer__bottom-inner{width:calc(100% - 28px);flex-direction:column;gap:6px}}
+{% endstyle %}
+
+{% schema %}
+{
+  "name":"Mattress topper footer",
+  "tag":"section",
+  "class":"section-wm-minimal-footer",
+  "settings":[
+    {"type":"textarea","id":"tagline","label":"Footer text","default":"Comfort-focused bedding for a softer, more inviting sleep space."},
+    {"type":"link_list","id":"menu","label":"Menu","default":"main-menu"},
+    {"type":"link_list","id":"support_menu","label":"Support menu"}
+  ],
+  "presets":[{"name":"Mattress topper footer"}]
+}
+{% endschema %}
