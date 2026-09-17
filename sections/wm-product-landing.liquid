@@ -1,4 +1,5 @@
 {{ 'wm-product-landing.css' | asset_url | stylesheet_tag }}
+{{ 'wm-research-copy.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'wm-product-landing.js' | asset_url }}" defer="defer"></script>
 
 {% liquid
@@ -61,6 +62,10 @@
 
       {% if section.settings.subtitle != blank %}
         <p class="wm-subtitle">{{ section.settings.subtitle }}</p>
+      {% endif %}
+
+      {% if section.settings.preprice_note != blank %}
+        <p class="wm-offer-preprice">{{ section.settings.preprice_note }}</p>
       {% endif %}
 
       <div class="wm-price" data-wm-price-wrap>
@@ -128,27 +133,23 @@
       <div class="wm-trust-row" role="list" aria-label="Purchase assurances">
         <div role="listitem"><strong>Secure checkout</strong><span>Protected payment</span></div>
         <div role="listitem"><strong>Tracked shipping</strong><span>Order updates</span></div>
-        <div role="listitem"><strong>Easy returns</strong><span>Policy-backed</span></div>
+        <div role="listitem"><strong>Clear returns</strong><span>Terms before launch</span></div>
       </div>
 
       <div class="wm-accordions">
         <details open>
-          <summary>Product details <span aria-hidden="true">+</span></summary>
+          <summary>What CloudLoft is for <span aria-hidden="true">+</span></summary>
           <div class="wm-accordion-content">
-            {% if wm_product.description != blank %}
-              {{ wm_product.description }}
-            {% else %}
-              <p>A thick, quilted pillow-top mattress pad designed to add a plush comfort layer to your existing bed.</p>
-            {% endif %}
+            <p>A quilted fiber-filled topper designed to add cushioning to a bed that feels too firm. It is not a replacement mattress and it does not repair structural sagging underneath.</p>
           </div>
         </details>
         <details>
           <summary>Sizing & fit <span aria-hidden="true">+</span></summary>
-          <div class="wm-accordion-content"><p>Choose the size that matches your mattress using the options above. Available sizing depends on the product variants currently offered.</p></div>
+          <div class="wm-accordion-content"><p>Choose the size that matches your mattress using the options above. Final offered sizes and pocket depth will be published from the production sample before launch.</p></div>
         </details>
         <details>
           <summary>Shipping & returns <span aria-hidden="true">+</span></summary>
-          <div class="wm-accordion-content"><p>{{ section.settings.shipping_text }}</p>{% if shop.refund_policy %}<p><a href="{{ shop.refund_policy.url }}">View full return policy</a></p>{% endif %}</div>
+          <div class="wm-accordion-content"><p>{{ section.settings.shipping_text }}</p>{% if shop.refund_policy %}<p><a href="{{ shop.refund_policy.url }}">View current store return policy</a></p>{% endif %}</div>
         </details>
       </div>
 
@@ -158,100 +159,144 @@
     </aside>
   </div>
 
-  <section class="wm-section wm-section--action">
-    <div class="wm-shell">
-      <div class="wm-section-heading">
-        <p class="wm-kicker">See it in action</p>
-        <h2>{{ section.settings.action_heading }}</h2>
-        <p>{{ section.settings.action_body }}</p>
-      </div>
-      <div class="wm-action-grid">
-        {% for media in wm_product.media limit: 3 %}
-          <div class="wm-action-card">
-            {% case media.media_type %}
-              {% when 'video' %}
-                {{ media | video_tag: controls: true, autoplay: false, loop: true, muted: true, class: 'wm-action-card__media' }}
-              {% when 'external_video' %}
-                {{ media | external_video_tag: class: 'wm-action-card__media' }}
-              {% else %}
-                {{ media.preview_image | image_url: width: 900 | image_tag: loading: 'lazy', class: 'wm-action-card__media', alt: media.alt | default: wm_product.title }}
-            {% endcase %}
-          </div>
+  <section class="wm-section wm-proof-intro" id="proof-1">
+    <div class="wm-shell wm-proof-recognition">
+      <div class="wm-proof-media">
+        {% if section.settings.problem_image != blank %}
+          {{ section.settings.problem_image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1400', alt: section.settings.problem_heading }}
         {% else %}
-          {% for i in (1..3) %}
-            <div class="wm-action-card wm-action-card--placeholder">{{ 'lifestyle-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}</div>
-          {% endfor %}
-        {% endfor %}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+      <div class="wm-proof-copy">
+        <p class="wm-kicker">01 — The bed you already know</p>
+        <h2>{{ section.settings.problem_heading }}</h2>
+        <p>{{ section.settings.problem_body }}</p>
+        <div class="wm-voice-grid">
+          <div class="wm-voice-card"><strong>A hollow where you sleep.</strong><span>You rotate the mattress. It feels fine for a night or two. Then the dip comes back.</span></div>
+          <div class="wm-voice-card"><strong>You wake up sore before the day has started.</strong><span>The bed already feels worn out, but replacing it is not the decision you are making right now.</span></div>
+          <div class="wm-voice-card"><strong>The last topper went flat.</strong><span>It looked thick out of the package, then packed down until you could barely tell it was there.</span></div>
+          <div class="wm-voice-card"><strong>You are tired of buying the feeling of a solution.</strong><span>This time, the page should show you what is actually inside before asking you to buy.</span></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="wm-story">
-    <div class="wm-story__media">
-      {% assign story_media = wm_product.media[1] | default: wm_product.featured_media %}
-      {% if story_media.preview_image %}
-        {{ story_media.preview_image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1400', class: 'wm-story__image', alt: story_media.alt | default: wm_product.title }}
-      {% else %}
-        {{ 'lifestyle-1' | placeholder_svg_tag: 'wm-story__image placeholder-svg' }}
-      {% endif %}
-    </div>
-    <div class="wm-story__copy">
-      <p class="wm-kicker">A simpler bedroom upgrade</p>
-      <h2>{{ section.settings.story_heading }}</h2>
-      <div class="wm-richtext">{{ section.settings.story_body }}</div>
+  <section class="wm-section wm-belief" id="proof-2">
+    <div class="wm-shell wm-belief__inner">
+      <div class="wm-belief__media">
+        {% if section.settings.mechanism_image != blank %}
+          {{ section.settings.mechanism_image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1400', alt: section.settings.mechanism_heading }}
+        {% else %}
+          {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+      <div class="wm-belief__copy">
+        <p class="wm-kicker">02 — Why the last one went flat</p>
+        <h2>{{ section.settings.mechanism_heading }}</h2>
+        <p>{{ section.settings.mechanism_body }}</p>
+        <div class="wm-belief-points">
+          <div class="wm-belief-point"><strong>Thickness tells you how tall it looks.</strong><span>With fiber fill, part of that initial height is air. Air compresses. The amount of material left behind is what matters after the first nights.</span></div>
+          <div class="wm-belief-point"><strong>Weight tells you how much material is actually there.</strong><span>Fill weight is not a standard number shoppers are guaranteed to see on a topper label. That is why we want the scale on camera.</span></div>
+          <div class="wm-belief-point"><strong>Stitching decides whether the filling can move away from you.</strong><span>If fill can migrate across one large space, repeated pressure can push it away from the place that carries your body. Closed compartments are meant to limit that travel.</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <div class="wm-marquee" aria-label="Product highlights">
-    <div class="wm-marquee__track">
-      {% for i in (1..2) %}
-        <span>PLUSH COMFORT</span><i>•</i><span>QUILTED TOP</span><i>•</i><span>MICROFIBER FILL</span><i>•</i><span>MULTIPLE SIZES</span><i>•</i>
-      {% endfor %}
-    </div>
-  </div>
-
-  <section class="wm-section wm-features">
+  <section class="wm-section wm-proof-lab" id="proof-3">
     <div class="wm-shell">
-      <div class="wm-section-heading wm-section-heading--left">
-        <p class="wm-kicker">Why this construction</p>
-        <h2>{{ section.settings.features_heading }}</h2>
-        <p>{{ section.settings.features_body }}</p>
+      <div class="wm-proof-lab__intro">
+        <p class="wm-kicker">03 — Proof, not adjectives</p>
+        <h2>{{ section.settings.proof_heading }}</h2>
+        <p>{{ section.settings.proof_body }}</p>
       </div>
-      <div class="wm-feature-grid">
-        <article class="wm-feature-card"><span>01</span><h3>Plush fill layer</h3><p>Microfiber and polyester fill adds a noticeably softer layer between you and your existing mattress.</p></article>
-        <article class="wm-feature-card"><span>02</span><h3>Quilted structure</h3><p>Stitched channels help distribute the fill across the sleep surface instead of leaving one flat sheet of padding.</p></article>
-        <article class="wm-feature-card"><span>03</span><h3>Full-bed coverage</h3><p>Designed as a mattress pad/topper, with size options that match common bed dimensions.</p></article>
-        <article class="wm-feature-card"><span>04</span><h3>Easy comfort upgrade</h3><p>Add a pillow-top feel without replacing the mattress underneath.</p></article>
+      <div class="wm-proof-grid">
+        <article class="wm-proof-card">
+          <div class="wm-proof-card__media">
+            {% if section.settings.scale_image != blank %}
+              {{ section.settings.scale_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'CloudLoft production sample on a scale' }}
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+          <div class="wm-proof-card__copy"><span>Test 01</span><h3>Put it on a scale.</h3><p>Publish the measured production-sample weight with the number visible in the same shot.</p><span class="wm-proof-status">PRODUCTION PROOF TO BE FILMED</span></div>
+        </article>
+        <article class="wm-proof-card">
+          <div class="wm-proof-card__media">
+            {% if section.settings.cut_image != blank %}
+              {{ section.settings.cut_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'CloudLoft cut-through construction proof' }}
+            {% else %}
+              {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+          <div class="wm-proof-card__copy"><span>Test 02</span><h3>Cut it open.</h3><p>Show the internal compartments and the actual filling. No render. No hidden cut.</p><span class="wm-proof-status">PRODUCTION PROOF TO BE FILMED</span></div>
+        </article>
+        <article class="wm-proof-card">
+          <div class="wm-proof-card__media">
+            {% if section.settings.measure_image != blank %}
+              {{ section.settings.measure_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: 'CloudLoft measured on camera' }}
+            {% else %}
+              {{ 'product-3' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+          <div class="wm-proof-card__copy"><span>Test 03</span><h3>Put the tape on it.</h3><p>Show the real dimensions and fit from the finished production sample instead of asking the product photo to do the proving.</p><span class="wm-proof-status">PRODUCTION PROOF TO BE FILMED</span></div>
+        </article>
       </div>
     </div>
   </section>
 
   <section class="wm-spec-strip">
-    <div class="wm-shell wm-spec-grid">
-      <div><strong>MICROFIBER</strong><span>Soft surface material</span></div>
-      <div><strong>PILLOW TOP</strong><span>Plush quilted construction</span></div>
-      <div><strong>MULTI-SIZE</strong><span>Choose your bed size</span></div>
+    <div class="wm-shell wm-spec-grid wm-spec-grid--research">
+      <div><strong>WEIGHED</strong><span>The number on camera</span></div>
+      <div><strong>CUT OPEN</strong><span>The construction visible</span></div>
+      <div><strong>MEASURED</strong><span>The finished sample, not a render</span></div>
     </div>
   </section>
 
-  <section class="wm-section wm-comparison">
-    <div class="wm-shell">
-      <div class="wm-section-heading">
-        <p class="wm-kicker">At a glance</p>
-        <h2>{{ section.settings.comparison_heading }}</h2>
-        <p>A practical comparison of a plush pillow-top pad versus a basic thin mattress protector.</p>
+  <section class="wm-guarantee" id="proof-4">
+    <div class="wm-shell wm-guarantee__inner">
+      <div>
+        <p class="wm-kicker">04 — A guarantee with a number in it</p>
+        <h2>{{ section.settings.guarantee_heading }}</h2>
+        <p>{{ section.settings.guarantee_body }}</p>
+        <div class="wm-guarantee__threshold">
+          <small>90-night flattening criterion</small>
+          {% if section.settings.guarantee_threshold != blank %}
+            <strong>{{ section.settings.guarantee_threshold }}</strong>
+          {% else %}
+            <strong>Final numeric threshold will be published here before launch.</strong>
+          {% endif %}
+        </div>
+        {% if shop.refund_policy %}<a class="wm-secondary-cta" href="{{ shop.refund_policy.url }}">VIEW CURRENT RETURN POLICY</a>{% endif %}
       </div>
-      <div class="wm-table-wrap">
-        <table class="wm-table">
-          <thead><tr><th>Feature</th><th>{{ wm_product.title | default: 'Pillow-Top Pad' }}</th><th>Basic thin protector</th></tr></thead>
-          <tbody>
-            <tr><td>Primary purpose</td><td>✓ Added cushioning</td><td>Mattress surface protection</td></tr>
-            <tr><td>Surface construction</td><td>✓ Quilted pillow-top</td><td>Usually low-profile</td></tr>
-            <tr><td>Fill layer</td><td>✓ Microfiber / polyester fill</td><td>Minimal or none</td></tr>
-            <tr><td>Comfort upgrade</td><td>✓ Designed to add softness</td><td>Not the main purpose</td></tr>
-            <tr><td>Bed-size options</td><td>✓ Variant dependent</td><td>Variant dependent</td></tr>
-          </tbody>
-        </table>
+      <div class="wm-guarantee__checks" role="list">
+        <div role="listitem"><span>✓</span> 90-night flattening coverage planned for launch</div>
+        <div role="listitem"><span>✓</span> Numeric qualifying criterion published on the page</div>
+        <div role="listitem"><span>✓</span> Free return shipping is the launch-policy requirement</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wm-section wm-value" id="proof-5">
+    <div class="wm-shell wm-value__inner">
+      <div class="wm-value__copy">
+        <p class="wm-kicker">05 — The decision for this year</p>
+        <h2>{{ section.settings.value_heading }}</h2>
+        <p>{{ section.settings.value_body }}</p>
+        <div class="wm-value__compare">
+          <div class="wm-value-box wm-value-box--primary"><small>Nubrae™ CloudLoft</small><strong>$199</strong><span>A comfort layer for the bed you are keeping now.</span></div>
+          <div class="wm-value-box"><small>Average Queen mattress</small><strong>~$1,000</strong><span>The larger purchase you can make when you are ready.</span></div>
+        </div>
+        <div class="wm-limit"><strong>What CloudLoft will not do:</strong> if the mattress underneath is structurally sagging, a topper will not repair it. CloudLoft is designed to make the surface more comfortable to sleep on while you save for the replacement.</div>
+        <a class="wm-anchor-cta" href="#{{ form_id }}">CHOOSE YOUR SIZE</a>
+      </div>
+      <div class="wm-value__media">
+        {% if section.settings.value_image != blank %}
+          {{ section.settings.value_image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1400', alt: section.settings.value_heading }}
+        {% else %}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
       </div>
     </div>
   </section>
@@ -259,33 +304,19 @@
   <section class="wm-section wm-faq">
     <div class="wm-shell wm-faq__layout">
       <div class="wm-section-heading wm-section-heading--left">
-        <p class="wm-kicker">Help before you order</p>
+        <p class="wm-kicker">Before you order</p>
         <h2>{{ section.settings.faq_heading }}</h2>
-        <p>Everything you should know before choosing a size.</p>
+        <p>Straight answers. The product should not need vague promises.</p>
       </div>
       <div class="wm-faq__list">
-        <details open><summary>What exactly is this product?<span>+</span></summary><p>It is a thick quilted mattress pad/topper with microfiber and polyester fill, designed to sit on top of your existing mattress and add a softer pillow-top feel.</p></details>
-        <details><summary>Which sizes are available?<span>+</span></summary><p>The available sizes are the variants shown in the selector above. The supplier listing identifies King, Queen and Full-size options; your storefront will only show the variants you choose to sell.</p></details>
-        <details><summary>Does it replace my mattress?<span>+</span></summary><p>No. It is an added comfort layer for an existing mattress, not a replacement mattress.</p></details>
-        <details><summary>What is the fill made from?<span>+</span></summary><p>The supplier listing describes a microfiber/polyester-filled pillow-top mattress pad.</p></details>
-        <details><summary>How should I care for it?<span>+</span></summary><p>Follow the care label supplied with the finished product. We do not publish wash or dry settings until they are confirmed for the exact SKU being sold.</p></details>
-        <details><summary>What about shipping and returns?<span>+</span></summary><p>{{ section.settings.shipping_text }} {% if shop.refund_policy %}<a href="{{ shop.refund_policy.url }}">See the full return policy.</a>{% endif %}</p></details>
-      </div>
-    </div>
-  </section>
-
-  <section class="wm-guarantee">
-    <div class="wm-shell wm-guarantee__inner">
-      <div>
-        <p class="wm-kicker">Shop with confidence</p>
-        <h2>{{ section.settings.guarantee_heading }}</h2>
-        <p>{{ section.settings.guarantee_body }}</p>
-        {% if shop.refund_policy %}<a class="wm-secondary-cta" href="{{ shop.refund_policy.url }}">VIEW RETURN POLICY</a>{% endif %}
-      </div>
-      <div class="wm-guarantee__checks" role="list">
-        <div role="listitem"><span>✓</span> Secure checkout</div>
-        <div role="listitem"><span>✓</span> Tracked order updates</div>
-        <div role="listitem"><span>✓</span> Clear return terms</div>
+        <details open><summary>What does CloudLoft actually do?<span>+</span></summary><p>It adds a quilted fiber layer on top of the mattress you already own. The supported use is adding cushioning to a bed that feels too firm. It does not repair a broken or structurally sagging mattress.</p></details>
+        <details><summary>Why are you talking about weight instead of thickness?<span>+</span></summary><p>With fiber-filled toppers, visible height includes air that compresses under use. Weight gives us a way to show how much material is actually present. The production sample will be weighed on camera before launch.</p></details>
+        <details><summary>Why does the quilting matter?<span>+</span></summary><p>Containment matters because filling that can travel can move away from the places that carry the most repeated load. We will show the final internal construction by cutting a production sample open on camera.</p></details>
+        <details><summary>Is this memory foam?<span>+</span></summary><p>No. The launch specification is fiber-filled rather than memory foam. Final fiber composition and care instructions will be published from the production label before sale.</p></details>
+        <details><summary>Can I machine wash it?<span>+</span></summary><p>The research strategy calls for a machine-washable fiber construction, but the exact wash and dry instructions will only be published after the finished SKU and care label are confirmed.</p></details>
+        <details><summary>What happens if it goes flat?<span>+</span></summary><p>The launch offer is built around 90-night flattening coverage with a numeric qualifying threshold. That number will be published on this page before the product is made available for purchase.</p></details>
+        <details><summary>Will this fix the sag in my mattress?<span>+</span></summary><p>No. A topper cannot repair structural sagging underneath. If the mattress is worn out, CloudLoft is a temporary comfort layer while you save for a replacement, not a repair.</p></details>
+        <details><summary>Which sizes are available?<span>+</span></summary><p>The storefront will show only the variants we actually sell. Final dimensions, pocket depth and fit will be published from the production sample.</p></details>
       </div>
     </div>
   </section>
@@ -302,25 +333,45 @@
   "tag": "section",
   "class": "section-wm-product-landing",
   "settings": [
-    {"type":"text","id":"promo_text","label":"Promo bar","default":"A more comfortable bed starts with one layer."},
-    {"type":"text","id":"eyebrow","label":"Product eyebrow","default":"Plush pillow-top mattress pad"},
-    {"type":"textarea","id":"subtitle","label":"Product subtitle","default":"A thick, quilted comfort layer designed to make your existing mattress feel softer and more inviting."},
-    {"type":"text","id":"benefit_1","label":"Benefit 1","default":"Plush microfiber / polyester fill"},
-    {"type":"text","id":"benefit_2","label":"Benefit 2","default":"Quilted pillow-top construction"},
-    {"type":"text","id":"benefit_3","label":"Benefit 3","default":"Made for home and hotel-style bedding"},
-    {"type":"text","id":"benefit_4","label":"Benefit 4","default":"Multiple mattress sizes available"},
+    {"type":"text","id":"promo_text","label":"Promo bar","default":"For the mattress you're keeping this year."},
+    {"type":"text","id":"eyebrow","label":"Product eyebrow","default":"For people who already bought a topper that went flat."},
+    {"type":"textarea","id":"subtitle","label":"Product subtitle","default":"CloudLoft is built around two things you can verify before you buy: how much material is actually inside, and whether it stays where it was put."},
+    {"type":"textarea","id":"preprice_note","label":"Pre-price reassurance","default":"Launch requirement: 90-night flattening coverage with a published measurement and free return shipping."},
+    {"type":"text","id":"benefit_1","label":"Benefit 1","default":"Production sample weighed on camera"},
+    {"type":"text","id":"benefit_2","label":"Benefit 2","default":"Internal construction shown by cut-through"},
+    {"type":"text","id":"benefit_3","label":"Fiber fill. Not memory foam."},
+    {"type":"text","id":"benefit_4","label":"Designed to add cushioning to a bed that feels too firm"},
     {"type":"text","id":"cta_label","label":"Add to cart label","default":"ADD TO CART"},
-    {"type":"textarea","id":"shipping_text","label":"Shipping copy","default":"Shipping timing and tracking details are shown at checkout and in your order confirmation."},
-    {"type":"text","id":"action_heading","label":"Action section heading","default":"See the comfort from every angle"},
-    {"type":"textarea","id":"action_body","label":"Action section body","default":"Use real product photos and video here to show the loft, quilting and how the topper sits on a finished bed."},
-    {"type":"text","id":"story_heading","label":"Story heading","default":"Make your mattress feel noticeably plusher"},
-    {"type":"richtext","id":"story_body","label":"Story body","default":"<p>You do not always need a new mattress to change the feel of your bed. A thick, quilted pillow-top layer adds softness on top of the mattress you already own.</p><p>The result is a more inviting sleep surface with the visual finish of a hotel-style bed.</p>"},
-    {"type":"text","id":"features_heading","label":"Features heading","default":"What makes this topper different"},
-    {"type":"textarea","id":"features_body","label":"Features body","default":"A simple construction story: plush fill, quilted structure and an easy way to add softness to the bed you already have."},
-    {"type":"text","id":"comparison_heading","label":"Comparison heading","default":"More than a thin mattress cover"},
-    {"type":"text","id":"faq_heading","label":"FAQ heading","default":"Frequently asked questions"},
-    {"type":"text","id":"guarantee_heading","label":"Guarantee heading","default":"Know the terms before you buy"},
-    {"type":"textarea","id":"guarantee_body","label":"Guarantee body","default":"Your purchase is covered by the store policies shown at checkout. Review the return terms before ordering so there are no surprises."}
+    {"type":"textarea","id":"shipping_text","label":"Shipping copy","default":"Final launch shipping and return terms will be published before the product is made available for purchase."},
+
+    {"type":"header","content":"Proof 1 — Customer problem"},
+    {"type":"image_picker","id":"problem_image","label":"Problem section image"},
+    {"type":"text","id":"problem_heading","label":"Problem heading","default":"You rotate it. The dip comes back."},
+    {"type":"textarea","id":"problem_body","label":"Problem body","default":"Maybe it is a hollow where you sleep. Maybe the bed feels too firm. Maybe you already bought a topper that looked thick for a week and then went flat. This page is for the person who is keeping the mattress this year and wants to see proof before buying another topper."},
+
+    {"type":"header","content":"Proof 2 — Mechanism and belief"},
+    {"type":"image_picker","id":"mechanism_image","label":"Mechanism section image"},
+    {"type":"text","id":"mechanism_heading","label":"Mechanism heading","default":"A topper is a weight product sold like a thickness product."},
+    {"type":"textarea","id":"mechanism_body","label":"Mechanism body","default":"The height you see out of the package includes air. Air compresses. What remains is the material that was actually inside. Then there is a second question: can that material stay under you, or can it migrate away from the place your body loads every night?"},
+
+    {"type":"header","content":"Proof 3 — Physical proof"},
+    {"type":"text","id":"proof_heading","label":"Proof heading","default":"Weigh it. Cut it open. Measure it."},
+    {"type":"textarea","id":"proof_body","label":"Proof body","default":"The production sample should do the selling. The scale, the inside construction and the tape measure will be filmed and published here before launch. Numbers and footage first."},
+    {"type":"image_picker","id":"scale_image","label":"Scale proof image"},
+    {"type":"image_picker","id":"cut_image","label":"Cut-through proof image"},
+    {"type":"image_picker","id":"measure_image","label":"Measurement proof image"},
+
+    {"type":"header","content":"Proof 4 — Guarantee"},
+    {"type":"text","id":"guarantee_heading","label":"Guarantee heading","default":"If it goes flat, the guarantee should not turn into an argument."},
+    {"type":"textarea","id":"guarantee_body","label":"Guarantee body","default":"The launch offer is a 90-night flattening guarantee with an objective measurement written on this page. If the qualifying limit is exceeded, the customer should not have to debate whether the product failed. Free return shipping is part of the launch requirement."},
+    {"type":"text","id":"guarantee_threshold","label":"Numeric guarantee threshold","info":"Leave blank until the final measured threshold is approved."},
+
+    {"type":"header","content":"Proof 5 — Value decision"},
+    {"type":"image_picker","id":"value_image","label":"Value section image"},
+    {"type":"text","id":"value_heading","label":"Value heading","default":"$199 now. Replace the mattress when you're ready."},
+    {"type":"textarea","id":"value_body","label":"Value body","default":"A new Queen mattress is roughly a $1,000 decision. CloudLoft is a $199 decision for the bed you are keeping this year. Not a replacement for a broken mattress. A comfort layer while you save for the replacement."},
+
+    {"type":"text","id":"faq_heading","label":"FAQ heading","default":"What we will say. And what we will not."}
   ],
   "presets": [{"name":"Mattress topper landing"}]
 }
