@@ -1,0 +1,28 @@
+<section class="pe-section">
+  <div class="pe-shell">
+    <div class="pe-heading pe-heading--center">
+      {% if section.settings.eyebrow != blank %}<p class="pe-eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+      <h2>{{ section.settings.heading }}</h2>
+      {% if section.settings.intro != blank %}<p>{{ section.settings.intro }}</p>{% endif %}
+    </div>
+    <div class="pe-reviews-slot">
+      {% assign has_app = false %}
+      {% for block in section.blocks %}
+        {% if block.type == '@app' %}
+          {% assign has_app = true %}
+          {% render block %}
+        {% endif %}
+      {% endfor %}
+      {% unless has_app %}
+        {% if request.design_mode %}<p>Add your reviews app block here. No review data is fabricated by this template.</p>{% endif %}
+      {% endunless %}
+    </div>
+  </div>
+</section>
+{% schema %}
+{"name":"PE reviews","blocks":[{"type":"@app"}],"settings":[
+{"type":"text","id":"eyebrow","label":"Eyebrow"},
+{"type":"text","id":"heading","label":"Heading","default":"Customer reviews"},
+{"type":"textarea","id":"intro","label":"Intro"}
+],"presets":[{"name":"PE reviews"}]}
+{% endschema %}
