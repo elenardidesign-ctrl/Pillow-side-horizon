@@ -15,11 +15,17 @@
       <div class="pe-gallery__stage">
         {% if product.media.size > 0 %}
           {% for media in product.media %}
+            {% liquid
+              assign pe_loading = 'lazy'
+              if forloop.first
+                assign pe_loading = 'eager'
+              endif
+            %}
             <div class="pe-gallery__slide{% if forloop.first %} is-active{% endif %}" data-pe-media="{{ media.id }}" {% unless forloop.first %}hidden{% endunless %}>
               {% render 'product-media',
                 media: media,
                 preview_image_only: false,
-                loading: forloop.first | default: 'eager',
+                loading: pe_loading,
                 selected_product: product,
                 is_main_product_media: forloop.first,
                 sizes: '(min-width: 990px) 58vw, 100vw'
@@ -66,7 +72,9 @@
 
       <h1 class="pe-product-title">{{ product.title }}</h1>
 
-      <div class="pe-app-inline">{% content_for 'blocks' %}</div>
+      <div class="pe-app-inline">
+        {% for block in section.blocks %}{% if block.type == '@app' %}{% render block %}{% endif %}{% endfor %}
+      </div>
 
       <div class="pe-price" data-pe-price-wrap>
         <span class="pe-price__current" data-pe-price>{{ current_variant.price | money }}</span>
