@@ -1,0 +1,260 @@
+{{ 'pe-product-page.css' | asset_url | stylesheet_tag }}
+<script type="module" src="{{ 'product-form.js' | asset_url }}"></script>
+<script src="{{ 'pe-product-page.js' | asset_url }}" defer></script>
+
+<script type="application/ld+json">{{ product | structured_data }}</script>
+
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign form_id = 'PEProductForm-' | append: section.id
+%}
+
+<section class="pe-main" data-pe-product data-section-id="{{ section.id }}">
+  <div class="pe-shell pe-main__grid">
+    <div class="pe-gallery" data-pe-gallery>
+      <div class="pe-gallery__stage">
+        {% if product.media.size > 0 %}
+          {% for media in product.media %}
+            <div class="pe-gallery__slide{% if forloop.first %} is-active{% endif %}" data-pe-media="{{ media.id }}" {% unless forloop.first %}hidden{% endunless %}>
+              {% render 'product-media',
+                media: media,
+                preview_image_only: false,
+                loading: forloop.first | default: 'eager',
+                selected_product: product,
+                is_main_product_media: forloop.first,
+                sizes: '(min-width: 990px) 58vw, 100vw'
+              %}
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="pe-gallery__empty">{{ 'product-1' | placeholder_svg_tag }}</div>
+        {% endif %}
+      </div>
+
+      {% if product.media.size > 1 %}
+        <div class="pe-gallery__thumbs" aria-label="Product media">
+          {% for media in product.media %}
+            <button type="button" class="pe-gallery__thumb{% if forloop.first %} is-active{% endif %}" data-pe-thumb="{{ media.id }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="View media {{ forloop.index }}">
+              {% if media.preview_image %}
+                {{ media.preview_image | image_url: width: 180 | image_tag: loading: 'lazy', alt: media.alt | default: product.title }}
+              {% endif %}
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <aside class="pe-buybox">
+      {% if section.settings.show_testimonial and section.settings.testimonial_text != blank %}
+        <div class="pe-mini-proof">
+          {% if section.settings.testimonial_avatar != blank %}
+            {{ section.settings.testimonial_avatar | image_url: width: 96 | image_tag: loading: 'lazy', class: 'pe-mini-proof__avatar', alt: section.settings.testimonial_name }}
+          {% endif %}
+          <div>
+            {% if section.settings.testimonial_stars > 0 %}
+              <div class="pe-mini-proof__stars" aria-label="{{ section.settings.testimonial_stars }} out of 5 stars">
+                {% for i in (1..section.settings.testimonial_stars) %}★{% endfor %}
+              </div>
+            {% endif %}
+            <p>{{ section.settings.testimonial_text }}</p>
+            {% if section.settings.testimonial_name != blank %}
+              <small>{{ section.settings.testimonial_name }}{% if section.settings.testimonial_verified %} · Verified{% endif %}</small>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+      <h1 class="pe-product-title">{{ product.title }}</h1>
+
+      <div class="pe-app-inline">{% content_for 'blocks' %}</div>
+
+      <div class="pe-price" data-pe-price-wrap>
+        <span class="pe-price__current" data-pe-price>{{ current_variant.price | money }}</span>
+        <span class="pe-price__compare{% unless current_variant.compare_at_price > current_variant.price %} is-hidden{% endunless %}" data-pe-compare>{{ current_variant.compare_at_price | money }}</span>
+        <span class="pe-price__save{% unless current_variant.compare_at_price > current_variant.price %} is-hidden{% endunless %}" data-pe-save>
+          {% if current_variant.compare_at_price > current_variant.price %}
+            Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}
+          {% endif %}
+        </span>
+      </div>
+
+      {% if section.settings.intro != blank %}
+        <div class="pe-buybox__intro rte">{{ section.settings.intro }}</div>
+      {% endif %}
+
+      {% unless product.has_only_default_variant %}
+        <div class="pe-options">
+          {% for option in product.options_with_values %}
+            <fieldset class="pe-option" data-pe-option-group="{{ forloop.index0 }}">
+              <legend>{{ option.name }}: <strong data-pe-option-label>{{ option.selected_value }}</strong></legend>
+              <div class="pe-option__values">
+                {% for value in option.values %}
+                  <button type="button"
+                    class="pe-option__button{% if option.selected_value == value %} is-selected{% endif %}"
+                    data-pe-option
+                    data-option-index="{{ forloop.parentloop.index0 }}"
+                    data-option-value="{{ value | escape }}"
+                    aria-pressed="{% if option.selected_value == value %}true{% else %}false{% endif %}">
+                    {{ value }}
+                  </button>
+                {% endfor %}
+              </div>
+            </fieldset>
+          {% endfor %}
+        </div>
+      {% endunless %}
+
+      {% if section.blocks.size > 0 %}
+        <div class="pe-benefits" role="list">
+          {% for block in section.blocks %}
+            {% if block.type == 'benefit' %}
+              <div class="pe-benefit" role="listitem" {{ block.shopify_attributes }}>
+                <span class="pe-benefit__icon">
+                  {% if block.settings.icon_image != blank %}
+                    {{ block.settings.icon_image | image_url: width: 64 | image_tag: loading: 'lazy', alt: '' }}
+                  {% else %}
+                    {{ 'icon-checkmark.svg' | inline_asset_content }}
+                  {% endif %}
+                </span>
+                <span>{{ block.settings.text }}</span>
+                {% if block.settings.link != blank %}<a href="{{ block.settings.link }}" aria-label="{{ block.settings.text }}"></a>{% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if section.settings.note_title != blank or section.settings.note_text != blank %}
+        <div class="pe-note">
+          {% if section.settings.note_title != blank %}<strong>{{ section.settings.note_title }}</strong>{% endif %}
+          {% if section.settings.note_text != blank %}<div class="rte">{{ section.settings.note_text }}</div>{% endif %}
+          {% if section.settings.note_link != blank %}<a href="{{ section.settings.note_link }}">{{ section.settings.note_link_label | default: 'Learn more' }}</a>{% endif %}
+        </div>
+      {% endif %}
+
+      <product-form-component
+        data-section-id="{{ section.id }}"
+        data-quantity-default="1"
+        on:submit="/handleSubmit"
+      >
+        <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+        {% form 'product', product, id: form_id, class: 'pe-form', data-type: 'add-to-cart-form' %}
+          <input type="hidden" name="id" value="{{ current_variant.id }}" ref="variantId" data-pe-variant-id>
+
+          <div class="pe-purchase-row">
+            <div class="pe-qty" aria-label="Quantity">
+              <button type="button" data-pe-qty-minus aria-label="Decrease quantity">−</button>
+              <input type="number" name="quantity" value="1" min="1" inputmode="numeric" data-pe-qty aria-label="Quantity">
+              <button type="button" data-pe-qty-plus aria-label="Increase quantity">+</button>
+            </div>
+            <button type="submit" name="add" class="button pe-atc" data-pe-atc {% unless current_variant.available %}disabled{% endunless %}>
+              <span data-pe-atc-text>{% if current_variant.available %}{{ section.settings.atc_label }}{% else %}Sold out{% endif %}</span>
+            </button>
+          </div>
+        {% endform %}
+      </product-form-component>
+
+      <div class="pe-trust" role="list">
+        {% for block in section.blocks %}
+          {% if block.type == 'trust' %}
+            <div class="pe-trust__item" role="listitem" {{ block.shopify_attributes }}>
+              <span>{{ 'icon-checkmark.svg' | inline_asset_content }}</span>
+              <div>
+                <strong>{{ block.settings.label }}</strong>
+                {% if block.settings.description != blank %}<small>{{ block.settings.description }}</small>{% endif %}
+              </div>
+              {% if block.settings.link != blank %}<a href="{{ block.settings.link }}" aria-label="{{ block.settings.label }}"></a>{% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="pe-accordions">
+        {% for block in section.blocks %}
+          {% if block.type == 'accordion' %}
+            <details {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.heading }} <span>+</span></summary>
+              <div class="rte">
+                {{ block.settings.content }}
+                {% if block.settings.page != blank %}{{ block.settings.page.content }}{% endif %}
+              </div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <script type="application/json" data-pe-variants>{{ product.variants | json }}</script>
+      <span data-pe-currency hidden>{{ cart.currency.iso_code | default: shop.currency }}</span>
+    </aside>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "PE main product",
+  "tag": "section",
+  "class": "section-pe-main-product",
+  "blocks": [
+    {"type":"@app"},
+    {
+      "type":"benefit",
+      "name":"Benefit",
+      "limit":8,
+      "settings":[
+        {"type":"image_picker","id":"icon_image","label":"Icon or image"},
+        {"type":"text","id":"text","label":"Text","default":"Add a product benefit"},
+        {"type":"url","id":"link","label":"Optional link"}
+      ]
+    },
+    {
+      "type":"trust",
+      "name":"Trust item",
+      "limit":4,
+      "settings":[
+        {"type":"text","id":"label","label":"Label","default":"Shipping information"},
+        {"type":"text","id":"description","label":"Description"},
+        {"type":"url","id":"link","label":"Optional link"}
+      ]
+    },
+    {
+      "type":"accordion",
+      "name":"Information accordion",
+      "limit":6,
+      "settings":[
+        {"type":"text","id":"heading","label":"Heading","default":"Overview"},
+        {"type":"richtext","id":"content","label":"Content","default":"<p>Add product information here.</p>"},
+        {"type":"page","id":"page","label":"Optional page"}
+      ]
+    }
+  ],
+  "settings": [
+    {"type":"checkbox","id":"show_testimonial","label":"Show testimonial card","default":false},
+    {"type":"textarea","id":"testimonial_text","label":"Testimonial text"},
+    {"type":"text","id":"testimonial_name","label":"Customer name"},
+    {"type":"checkbox","id":"testimonial_verified","label":"Show verified label","default":false},
+    {"type":"range","id":"testimonial_stars","label":"Stars","min":0,"max":5,"step":1,"default":0},
+    {"type":"image_picker","id":"testimonial_avatar","label":"Avatar"},
+    {"type":"richtext","id":"intro","label":"Short product intro","default":"<p>Add a concise product description or value proposition.</p>"},
+    {"type":"text","id":"note_title","label":"Information note title"},
+    {"type":"richtext","id":"note_text","label":"Information note text"},
+    {"type":"url","id":"note_link","label":"Information note link"},
+    {"type":"text","id":"note_link_label","label":"Information note link label"},
+    {"type":"text","id":"atc_label","label":"Add to cart label","default":"ADD TO CART"}
+  ],
+  "presets":[
+    {
+      "name":"PE main product",
+      "blocks":[
+        {"type":"benefit","settings":{"text":"Add a concise product benefit"}},
+        {"type":"benefit","settings":{"text":"Add another product benefit"}},
+        {"type":"benefit","settings":{"text":"Add a third product benefit"}},
+        {"type":"trust","settings":{"label":"Shipping","description":"Add your shipping terms"}},
+        {"type":"trust","settings":{"label":"Returns","description":"Add your return terms"}},
+        {"type":"accordion","settings":{"heading":"Overview"}},
+        {"type":"accordion","settings":{"heading":"Materials"}},
+        {"type":"accordion","settings":{"heading":"Care"}}
+      ]
+    }
+  ]
+}
+{% endschema %}
