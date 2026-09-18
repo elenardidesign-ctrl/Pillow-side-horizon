@@ -155,9 +155,14 @@
               <input type="number" name="quantity" value="1" min="1" inputmode="numeric" data-pe-qty aria-label="Quantity">
               <button type="button" data-pe-qty-plus aria-label="Increase quantity">+</button>
             </div>
-            <button type="submit" name="add" class="button pe-atc" data-pe-atc {% unless current_variant.available %}disabled{% endunless %}>
-              <span data-pe-atc-text>{% if current_variant.available %}{{ section.settings.atc_label }}{% else %}Sold out{% endif %}</span>
-            </button>
+            <add-to-cart-component ref="addToCartButtonContainer" data-add-to-cart-animation="{{ settings.add_to_cart_animation }}">
+              <button type="submit" name="add" ref="addToCartButton" class="button pe-atc" data-pe-atc {% unless current_variant.available %}disabled{% endunless %}>
+                <span data-pe-atc-text>{% if current_variant.available %}{{ section.settings.atc_label }}{% else %}Sold out{% endif %}</span>
+                <span class="add-to-cart__added" aria-hidden="true">
+                  <span class="svg-wrapper add-to-cart__added-icon">{{ 'icon-checkmark-burst.svg' | inline_asset_content }}</span>
+                </span>
+              </button>
+            </add-to-cart-component>
           </div>
         {% endform %}
       </product-form-component>
