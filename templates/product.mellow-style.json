@@ -1,0 +1,437 @@
+/*
+ * Alternate premium product template. Header and footer are provided by the existing theme layout.
+ */
+{
+  "sections": {
+    "pe_main": {
+      "type": "pe-main-product",
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Add a concise, verifiable product benefit"
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "text": "Add another product-specific benefit"
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "text": "Use this item for materials, construction, or use case"
+          }
+        },
+        "trust_1": {
+          "type": "trust",
+          "settings": {
+            "label": "Shipping",
+            "description": "Add your shipping terms"
+          }
+        },
+        "trust_2": {
+          "type": "trust",
+          "settings": {
+            "label": "Returns",
+            "description": "Add your return terms"
+          }
+        },
+        "trust_3": {
+          "type": "trust",
+          "settings": {
+            "label": "Support",
+            "description": "Add a customer support note"
+          }
+        },
+        "acc_1": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Overview",
+            "content": "<p>Add product overview content here.</p>"
+          }
+        },
+        "acc_2": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Materials",
+            "content": "<p>Add verified materials information here.</p>"
+          }
+        },
+        "acc_3": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Care",
+            "content": "<p>Add care instructions here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "trust_1",
+        "trust_2",
+        "trust_3",
+        "acc_1",
+        "acc_2",
+        "acc_3"
+      ],
+      "settings": {
+        "show_testimonial": false,
+        "testimonial_text": "",
+        "testimonial_name": "",
+        "testimonial_verified": false,
+        "testimonial_stars": 0,
+        "intro": "<p>Add a concise product description or value proposition.</p>",
+        "note_title": "",
+        "note_text": "",
+        "note_link_label": "",
+        "atc_label": "ADD TO CART"
+      }
+    },
+    "pe_zones": {
+      "type": "pe-feature-zones",
+      "blocks": {
+        "zone_1": {
+          "type": "zone",
+          "settings": {
+            "marker": "01",
+            "title": "Feature title",
+            "description": "Explain what this part of the product does and why it matters."
+          }
+        },
+        "zone_2": {
+          "type": "zone",
+          "settings": {
+            "marker": "02",
+            "title": "Feature title",
+            "description": "Use clear product education instead of unverified claims."
+          }
+        },
+        "zone_3": {
+          "type": "zone",
+          "settings": {
+            "marker": "03",
+            "title": "Feature title",
+            "description": "Add a third construction, material, or use-case detail."
+          }
+        }
+      },
+      "block_order": [
+        "zone_1",
+        "zone_2",
+        "zone_3"
+      ],
+      "settings": {
+        "enabled": true,
+        "eyebrow": "Designed with intention",
+        "heading": "One product. Multiple thoughtful details.",
+        "description": "Use this section to explain the product architecture without relying on vague claims."
+      }
+    },
+    "pe_feature": {
+      "type": "pe-image-feature",
+      "settings": {
+        "enabled": true,
+        "eyebrow": "A closer look",
+        "heading": "Explain the benefit in detail.",
+        "text": "<p>Use this section for product education, materials, construction, or a detailed benefit that deserves more space.</p>",
+        "image_position": "left",
+        "background": "white"
+      }
+    },
+    "pe_reviews": {
+      "type": "pe-reviews",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "eyebrow": "",
+        "heading": "Customer reviews",
+        "intro": ""
+      }
+    },
+    "pe_authority": {
+      "type": "pe-authority",
+      "blocks": {
+        "point_1": {
+          "type": "point",
+          "settings": {
+            "title": "Product principle",
+            "body": "Explain a material, construction choice, mechanism, or other verifiable product detail."
+          }
+        },
+        "point_2": {
+          "type": "point",
+          "settings": {
+            "title": "Product principle",
+            "body": "Add evidence-backed information here. Avoid medical or certification claims unless substantiated."
+          }
+        },
+        "point_3": {
+          "type": "point",
+          "settings": {
+            "title": "Product principle",
+            "body": "Use the third card for another reason the product is designed the way it is."
+          }
+        }
+      },
+      "block_order": [
+        "point_1",
+        "point_2",
+        "point_3"
+      ],
+      "settings": {
+        "enabled": true,
+        "eyebrow": "Why it works",
+        "heading": "A clearer way to understand the product.",
+        "intro": "Use evidence-backed product information here. Leave medical or certification claims out unless you can substantiate them."
+      }
+    },
+    "pe_cards": {
+      "type": "pe-feature-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "badge": "Detail",
+            "title": "Feature title",
+            "description": "Add a concise, product-specific explanation."
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "badge": "Detail",
+            "title": "Feature title",
+            "description": "Add another product-specific explanation."
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2"
+      ],
+      "settings": {
+        "enabled": true,
+        "eyebrow": "",
+        "heading": "Details worth seeing up close.",
+        "intro": ""
+      }
+    },
+    "pe_faq": {
+      "type": "pe-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "What should customers know before ordering?",
+            "answer": "<p>Add a clear, product-specific answer here.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I choose the right option?",
+            "answer": "<p>Explain your real sizing or variant guidance here.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "How should I care for it?",
+            "answer": "<p>Add verified care instructions here.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>Add or link your current store policy here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4"
+      ],
+      "settings": {
+        "enabled": true,
+        "eyebrow": "",
+        "heading": "Frequently asked questions",
+        "intro": ""
+      }
+    },
+    "pe_stats": {
+      "type": "pe-stats",
+      "blocks": {},
+      "block_order": [],
+      "disabled": true,
+      "settings": {
+        "enabled": false,
+        "heading": "Proof you can substantiate",
+        "intro": "Enable this section only when you have real supporting data."
+      }
+    },
+    "product_recommendations": {
+      "type": "product-recommendations",
+      "blocks": {
+        "text_heading": {
+          "type": "text",
+          "name": "t:names.header",
+          "settings": {
+            "text": "<h2>You may also like</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h4",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "gallery": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "title": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "gallery",
+            "title",
+            "price"
+          ]
+        }
+      },
+      "block_order": [
+        "text_heading"
+      ],
+      "name": "t:names.product_recommendations",
+      "settings": {
+        "product": "{{ closest.product }}",
+        "recommendation_type": "related",
+        "layout_type": "grid",
+        "carousel_on_mobile": true,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 28,
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      }
+    },
+    "pe_final": {
+      "type": "pe-final-cta",
+      "settings": {
+        "enabled": true,
+        "eyebrow": "",
+        "heading": "Ready to choose your option?",
+        "text": "Return to the product selector to choose the variant that fits your needs.",
+        "button_label": "CHOOSE YOUR OPTION"
+      }
+    }
+  },
+  "order": [
+    "pe_main",
+    "pe_zones",
+    "pe_feature",
+    "pe_reviews",
+    "pe_authority",
+    "pe_cards",
+    "pe_faq",
+    "pe_stats",
+    "product_recommendations",
+    "pe_final"
+  ]
+}
